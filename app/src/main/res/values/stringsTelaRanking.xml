@@ -1,0 +1,12 @@
+<resources>
+    <string name="tenho">Tenho:</string>
+    <string name="joguei">Joguei:</string>
+    <string name="zerei">Zerei:</string>
+    <string name="quero">Quero:</string>
+    <string name="gastei">Gastei:</string>
+
+    <dimen name="tamanho_ranking">100dp</dimen>
+    <dimen name="font_titulo_ranking">20dp</dimen>
+    <dimen name="font_qtde_ranking">20dp</dimen>
+    <dimen name="padding_left">20dp</dimen>
+</resources>

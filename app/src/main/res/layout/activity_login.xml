@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/company_image"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:scaleType="center"
+        android:src="@drawable/logo_1"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+    />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/container_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/company_image"
+        android:background="@android:color/white"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/container_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_email"
+        android:background="@android:color/white"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_enter"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="@string/button_enter"
+        android:layout_below="@id/container_password"
+        android:background="@drawable/shape_button"
+        android:padding="8dp"
+     />
+
+    <Button
+        android:id="@+id/button_forgot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_forgot"
+        android:layout_below="@id/button_enter"
+        android:background="@drawable/shape_button_light"
+        android:paddingRight="8dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:textAllCaps="false"
+        android:drawableRight="@drawable/ic_help_outline_black_24dp"
+     />
+
+
+</RelativeLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/container_detalhe"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+
+    <ImageView
+        android:id="@+id/imagem_jogo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/Bomberman"
+     />
+
+    <TextView
+        android:id="@+id/nome_jogo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/imagem_jogo"
+        android:text="Bomberman"
+        android:gravity="center"
+        android:textSize="20dp"
+    />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/avaliacao"
+        android:gravity="center"
+        android:layout_below="@id/nome_jogo"
+        >
+
+        <ImageView
+            android:id="@+id/star_1"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/star_2"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/star_3"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/star_4"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            />
+
+        <ImageView
+            android:id="@+id/star_5"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.edu.unidavi.unidavijava.TodoListFragment"
+    android:weightSum="5"
+    >
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_tenho"
+        android:weightSum="2"
+        android:background="@color/verde"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/text_tenho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/tenho"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_titulo_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:paddingLeft="@dimen/padding_left"
+            />
+
+        <TextView
+            android:id="@+id/text_tenho_qtde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorBlack"
+            android:text="30"
+            android:textSize="@dimen/font_qtde_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:paddingRight="70dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_joguei"
+        android:weightSum="2"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/text_joguei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/joguei"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_titulo_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:paddingLeft="@dimen/padding_left"
+            />
+
+        <TextView
+            android:id="@+id/text_joguei_qtde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorBlack"
+            android:text="15"
+            android:textSize="@dimen/font_qtde_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:paddingRight="70dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_zerei"
+        android:weightSum="2"
+        android:background="@color/verde"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/text_zerei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/zerei"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_titulo_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:paddingLeft="@dimen/padding_left"
+            />
+
+        <TextView
+            android:id="@+id/text_zerei_qtde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorBlack"
+            android:text="08"
+            android:textSize="@dimen/font_qtde_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:paddingRight="70dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linear_quero"
+        android:weightSum="2"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/text_quero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/quero"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_titulo_ranking"
+            android:layout_weight="2"
+            android:textAlignment="viewStart"
+            android:paddingLeft="@dimen/padding_left"
+            />
+
+        <TextView
+            android:id="@+id/text_quero_qtde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorBlack"
+            android:text="15"
+            android:textSize="@dimen/font_qtde_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:paddingRight="70dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/verde"
+        android:id="@+id/linear_gastei"
+        android:weightSum="2"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/text_gastei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/gastei"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_titulo_ranking"
+            android:layout_weight="2"
+            android:textAlignment="viewStart"
+            android:paddingLeft="@dimen/padding_left"
+            />
+
+        <TextView
+            android:id="@+id/text_gastei_qtde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/colorBlack"
+            android:text="1500.50,00"
+            android:textSize="@dimen/font_qtde_ranking"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd"
+            android:paddingRight="70dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
