@@ -2,18 +2,22 @@ package br.edu.unidavi.unidavijava.features.configuracoes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.data.Session;
 import br.edu.unidavi.unidavijava.data.SessionConfig;
+import br.edu.unidavi.unidavijava.features.login.LoginActivity;
 
 public class ConfiguracaoActivity extends Fragment {
 
@@ -51,6 +55,7 @@ public class ConfiguracaoActivity extends Fragment {
         adicionaOnFocusChangeAno(editAnoInicial);
         adicionaOnFocusChangeAno(editAnoFinal);
         adicionaOnChangeOrdenacao();
+        adicionaOnClickSair();
     }
 
     private void adicionaOnFocusChangeAno(EditText edit){
@@ -127,5 +132,33 @@ public class ConfiguracaoActivity extends Fragment {
                 session.saveOrdemCategoriaInSession(ordemCategoria.isChecked());
             }
         });
+    }
+
+    private void adicionaOnClickSair(){
+
+        Button botaoSair = getView().findViewById(R.id.button_sair);
+
+        botaoSair.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    limpaLoginCache();
+                    backToLogin();
+                }
+            }
+        );
+    }
+
+    private void backToLogin() {
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    private void limpaLoginCache(){
+        Session session = new Session(getContext());
+        session.saveEmailInSession("");
+        session.saveSenhaInSession("");
     }
 }

@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText editTextPassword = findViewById(R.id.input_password);
         editTextPassword.requestFocus();
 
-        if (session.getEmailInSession() != null && session.getSenhaInSession() != null) {
+        if (session.getEmailInSession().length() > 0 && session.getSenhaInSession().length() > 0) {
             goToHome();
         }
     }
