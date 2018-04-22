@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="6dp"
-    android:textSize="13sp"
-    tools:context="br.edu.unidavi.unidavijava.TodoListFragment">
+    android:textSize="13sp">
 
     <TextView
         android:id="@+id/text_filtro_ano"
@@ -26,10 +25,11 @@
         android:id="@+id/input_ano_inicio"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:hint="1990"
+        android:hint="1950"
         android:layout_toRightOf="@id/text_filtro_ano"
         android:layout_marginBottom="10dp"
-        android:inputType="text" />
+        android:maxLength="4"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/text_separador"
@@ -47,11 +47,12 @@
         android:id="@+id/input_ano_final"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:hint="2018"
-        android:inputType="text"
+        android:hint="2050"
+        android:inputType="number"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@id/text_separador"
         android:paddingLeft="10dp"
+        android:maxLength="4"
     />
 
     <View
