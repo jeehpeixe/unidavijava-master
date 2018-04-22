@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.SessionConfig;
-import br.edu.unidavi.unidavijava.features.home.MainActivity;
 
 public class ConfiguracaoActivity extends Fragment {
 
@@ -39,8 +39,18 @@ public class ConfiguracaoActivity extends Fragment {
         editAnoInicial.setText(session.getAnoInicioInSession());
         editAnoFinal.setText(session.getAnoFinalInSession());
 
+        RadioButton ordemData = getView().findViewById(R.id.radio_ordenacao_data);
+        ordemData.setChecked(session.getOrdemDataInSession());
+
+        RadioButton ordemTitulo = getView().findViewById(R.id.radio_ordenacao_titulo);
+        ordemTitulo.setChecked(session.getOrdemTituloInSession());
+
+        RadioButton ordemCategoria = getView().findViewById(R.id.radio_ordenacao_categoria);
+        ordemCategoria.setChecked(session.getOrdemCategoriaInSession());
+
         adicionaOnFocusChangeAno(editAnoInicial);
         adicionaOnFocusChangeAno(editAnoFinal);
+        adicionaOnChangeOrdenacao();
     }
 
     private void adicionaOnFocusChangeAno(EditText edit){
@@ -87,5 +97,35 @@ public class ConfiguracaoActivity extends Fragment {
         else {
             session.saveAnoFinalInSession(editAno.getText().toString());
         }
+    }
+
+    private void adicionaOnChangeOrdenacao(){
+        final RadioButton ordemTitulo    = getView().findViewById(R.id.radio_ordenacao_titulo);
+        final RadioButton ordemData      = getView().findViewById(R.id.radio_ordenacao_data);
+        final RadioButton ordemCategoria = getView().findViewById(R.id.radio_ordenacao_categoria);
+
+        ordemTitulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SessionConfig session = new SessionConfig(getContext());
+                session.saveOrdemTituloInSession(ordemTitulo.isChecked());
+            }
+        });
+
+        ordemData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SessionConfig session = new SessionConfig(getContext());
+                session.saveOrdemDataInSession(ordemData.isChecked());
+            }
+        });
+
+        ordemCategoria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SessionConfig session = new SessionConfig(getContext());
+                session.saveOrdemCategoriaInSession(ordemCategoria.isChecked());
+            }
+        });
     }
 }

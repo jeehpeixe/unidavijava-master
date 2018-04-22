@@ -95,7 +95,7 @@
         <RadioButton android:id="@+id/radio_ordenacao_categoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_ordenacao"
+            android:text="@string/label_categoria"
          />
     </RadioGroup>
 
