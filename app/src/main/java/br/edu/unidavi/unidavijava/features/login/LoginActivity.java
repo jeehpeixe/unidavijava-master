@@ -29,20 +29,25 @@ public class LoginActivity extends AppCompatActivity {
 
         Button buttonEnter = findViewById(R.id.button_enter);
         buttonEnter.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        tryLogin();
-                    }
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tryLogin();
                 }
+            }
         );
 
         Session session = new Session(this);
+
         EditText editTextEmail = findViewById(R.id.input_email);
         editTextEmail.setText(session.getEmailInSession());
 
         EditText editTextPassword = findViewById(R.id.input_password);
         editTextPassword.requestFocus();
+
+        if (session.getEmailInSession() != null && session.getSenhaInSession() != null) {
+            goToHome();
+        }
     }
 
     @Override
@@ -66,30 +71,25 @@ public class LoginActivity extends AppCompatActivity {
 
         showDialog();
 
-        WebTaskLogin task = new WebTaskLogin(this,emailValue, passwordValue);
+        WebTaskLogin task = new WebTaskLogin(this, emailValue, passwordValue);
         task.execute();
 
     }
 
     @Subscribe
     public void onEvent(User user){
-
         hideDialog();
-
         Session session = new Session(this);
         session.saveEmailInSession(user.getEmail());
-        session.saveTokenInSession(user.getToken());
+        session.saveSenhaInSession(user.getSenha());
         goToHome();
     }
 
     @Subscribe
     public void onEvent(Error error){
-
         hideDialog();
-
         Snackbar.make(findViewById(R.id.container), error.getMessage(), Snackbar.LENGTH_LONG).show();
     }
-
 
     private void goToHome() {
         Intent intent = new Intent(this, MainActivity.class);

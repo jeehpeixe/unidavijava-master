@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_resetar"
         android:layout_below="@id/grupo_ordenacao"
-        android:background="@drawable/shape_button"
+        android:background="@color/verde_padrao"
         android:textSize="14sp"
         android:textColor="@color/gray"
         android:textAllCaps="false"

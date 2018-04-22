@@ -29,13 +29,13 @@ public class Session {
         return sharedPreferences.getString(FIELD_USERNAME,"");
     }
 
-    public void saveTokenInSession(String tokenValue){
+    public void saveSenhaInSession(String tokenValue){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(FIELD_TOKEN, tokenValue);
         editor.commit();
     }
 
-    public String getTokenInSession(){
+    public String getSenhaInSession(){
         return sharedPreferences.getString(FIELD_TOKEN,"");
     }
 
