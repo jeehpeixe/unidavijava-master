@@ -79,6 +79,7 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         if(error!= null && !silent){
@@ -101,6 +102,8 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
 
                 case RESPONSE_INVALID_REQUEST:
                     EventBus.getDefault().post(new Error(context.getString(R.string.error_request)));
+                    break;
+                default:
                     break;
             }
         }
