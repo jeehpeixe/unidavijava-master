@@ -2,11 +2,16 @@ package br.edu.unidavi.unidavijava.features.home;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
+import android.view.View;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.features.configuracoes.ConfiguracaoActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         // Criando as abas
         tabLayout.addTab(tabLayout.newTab().setText("Jogos"));
@@ -36,6 +41,21 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_chart_black_24dp);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        //Alterando a aba ao clicar no item do menu
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ViewPager mPager = (ViewPager) findViewById(R.id.page_viewer);
+                mPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
 
         // Instanciando o ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.page_viewer);
