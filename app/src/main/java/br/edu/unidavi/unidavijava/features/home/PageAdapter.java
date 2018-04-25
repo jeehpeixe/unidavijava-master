@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.edu.unidavi.unidavijava.features.configuracoes.ConfiguracaoActivity;
+import br.edu.unidavi.unidavijava.features.lista_geral.ListaGeralActivity;
 import br.edu.unidavi.unidavijava.features.ranking.RankingActivity;
 
 public class PageAdapter extends FragmentPagerAdapter {
@@ -21,8 +22,8 @@ public class PageAdapter extends FragmentPagerAdapter {
         switch (position) {
 
             // Carregar as classes dos fragmentos aqui
-            //case 0:
-            //    return new jogos();
+            case 0:
+                return new ListaGeralActivity();
             //case 1:
             //    return new meus_jogos();
             case 2:
