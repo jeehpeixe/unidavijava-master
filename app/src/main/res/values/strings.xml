@@ -6,7 +6,7 @@
     <string name="label_error_invalid_response">Resposta do servidor é inválida</string>
     <string name="login_invalido">Login Inválido!</string>
     <string name="message_wait">Aguarde</string>
-
+    <string name="bomberman">Bomberman</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lista_vazia">Lista Vazia...</string>
