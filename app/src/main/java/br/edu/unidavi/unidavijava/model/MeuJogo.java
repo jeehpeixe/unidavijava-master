@@ -4,25 +4,15 @@ package br.edu.unidavi.unidavijava.model;
  * Created by jessicapeixe
  */
 
-public class MeuJogo {
+public class MeuJogo extends Jogo {
 
-    private Jogo jogo;
     private boolean quero;
     private boolean tenho;
     private boolean joguei;
     private boolean zerei;
     private boolean fisico;
     private Float paguei;
-    private Integer nota;
-    private String urlImagem;
-
-    public Jogo getJogo() {
-        return jogo;
-    }
-
-    public void setJogo(Jogo jogo) {
-        this.jogo = jogo;
-    }
+    private Double notaPessoal;
 
     public boolean isQuero() {
         return quero;
@@ -72,19 +62,12 @@ public class MeuJogo {
         this.paguei = paguei;
     }
 
-    public Integer getNota() {
-        return nota;
+    public Double getNotaPessoal() {
+        return notaPessoal;
     }
 
-    public void setNota(Integer nota) {
-        this.nota = nota;
+    public void setNotaPessoal(Double nota) {
+        this.notaPessoal = nota;
     }
 
-    public String getUrlImagem() {
-        return urlImagem;
-    }
-
-    public void setUrlImagem(String urlImagem) {
-        this.urlImagem = urlImagem;
-    }
 }

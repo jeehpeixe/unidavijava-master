@@ -9,10 +9,10 @@ public class Jogo {
     private Integer codigo;
     private String nome;
     private String plataforma;
-    private String lancamento;
+    private Integer lancamento;
     private String genero;
-    private String descricao;
     private String imageUrl;
+    private Double nota;
 
     public String getImageUrl() {
         return imageUrl;
@@ -46,11 +46,11 @@ public class Jogo {
         this.plataforma = plataforma;
     }
 
-    public String getLancamento() {
+    public Integer getLancamento() {
         return lancamento;
     }
 
-    public void setLancamento(String lancamento) {
+    public void setLancamento(Integer lancamento) {
         this.lancamento = lancamento;
     }
 
@@ -62,11 +62,7 @@ public class Jogo {
         this.genero = genero;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public Double getNota() { return nota; }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public void setNota(Double nota) { this.nota = nota; }
 }
