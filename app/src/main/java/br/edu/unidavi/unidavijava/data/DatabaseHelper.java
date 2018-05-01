@@ -68,7 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.insertOrThrow(TABLE_GAME, null, values);
         } catch (SQLException e) {
-            db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().trim() + "' AND plataforma = '"+jogo.getPlataforma().trim()+"'", null);
+            db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().replace("'", "''").trim() + "' AND plataforma = '"+jogo.getPlataforma().replace("'", "''").trim()+"'", null);
         } finally {
             if (db != null) {
                 db.close();
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("paguei", jogo.getPaguei());
         values.put("notaPessoal", jogo.getNotaPessoal());
 
-        db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().trim() + "' AND plataforma = '"+jogo.getPlataforma().trim()+"'", null);
+        db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().replace("'", "''").trim() + "' AND plataforma = '"+jogo.getPlataforma().replace("'", "''").trim()+"'", null);
         db.close();
     }
 
