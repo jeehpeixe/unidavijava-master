@@ -25,8 +25,12 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
     public static final int RESPONSE_OK = 200;
     public static final int RESPONSE_INVALID_REQUEST = 403;
     private static int TIMEOUT = 5;
+    // Apiary Jessica
     //private static String BASE_URL = "http://private-ab912-jeehpeixe.apiary-mock.com/";
-    private static String BASE_URL = "http://private-7359a-unidavi2.apiary-mock.com/";
+    // Apiary Thiago
+    //private static String BASE_URL = "http://private-7359a-unidavi2.apiary-mock.com/";
+    // Apiary Alfonso
+    private static String BASE_URL = "http://private-7ee726-posunidaviandroid1.apiary-mock.com/";
 
     private String serviceURL;
     private Context context;
