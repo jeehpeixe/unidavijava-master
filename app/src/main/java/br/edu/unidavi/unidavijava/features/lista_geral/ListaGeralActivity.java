@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
@@ -58,6 +59,14 @@ public class ListaGeralActivity extends Fragment {
 
         return view;
     }
+    private void salvar(List<Jogo> jogoList) {
+
+        DatabaseHelper db = new DatabaseHelper(getActivity());
+        for (Jogo jogo : jogoList) {
+            db.createJogo(jogo);
+        }
+
+    }
 
     @Override
     public void onStart() {
@@ -81,6 +90,10 @@ public class ListaGeralActivity extends Fragment {
 
     @Subscribe
     public void onEvent(List<Jogo> gamesList){
+
+        // Salavar os jogos na base de dados
+        salvar(gamesList);
+
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
