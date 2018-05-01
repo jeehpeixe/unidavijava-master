@@ -3,6 +3,7 @@ package br.edu.unidavi.unidavijava.features.lista_geral;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
+import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
@@ -31,6 +33,7 @@ public class ListaGeralActivity extends Fragment {
     private RecyclerView recyclerView;
     private ListaGeralAdapter adapter;
     private ProgressDialog mDialog;
+    private DatabaseHelper db;
 
     public ListaGeralActivity() {
         // Required empty public constructor
@@ -57,12 +60,14 @@ public class ListaGeralActivity extends Fragment {
         adapter = new ListaGeralAdapter(getActivity(), new ArrayList<Jogo>());
         recyclerView.setAdapter(adapter);
 
+        db = new DatabaseHelper(getActivity());
+
         return view;
     }
 
     private void salvar(List<Jogo> jogoList) {
 
-        DatabaseHelper db = new DatabaseHelper(getActivity());
+        //DatabaseHelper db = new DatabaseHelper(getActivity());
         for (Jogo jogo : jogoList) {
             db.createJogo(jogo);
         }
@@ -83,10 +88,19 @@ public class ListaGeralActivity extends Fragment {
 
     @Subscribe
     public void onEvent(Error error){
+        /*
         Toast.makeText(getActivity(), "Erro ao buscar lista de jogos...", Toast.LENGTH_SHORT).show();
         getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);
         getView().findViewById(R.id.recycler_list_games).setVisibility(View.INVISIBLE);
         mDialog.dismiss();
+        */
+        Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
+
+        //DatabaseHelper db = new DatabaseHelper(getActivity());
+        // Recupar os jogos do banco
+        List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
+
+        carregarLista(gamesList);
     }
 
     @Subscribe
@@ -94,7 +108,10 @@ public class ListaGeralActivity extends Fragment {
 
         // Salavar os jogos na base de dados
         salvar(gamesList);
+        carregarLista(gamesList);
+    }
 
+    public void carregarLista(List<Jogo> gamesList){
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
