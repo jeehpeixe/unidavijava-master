@@ -14,7 +14,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bomberman"
         android:contentDescription="@string/bomberman"
-     />
+        />
 
     <TextView
         android:id="@+id/nome_jogo"
@@ -24,15 +24,69 @@
         android:text="@string/bomberman"
         android:gravity="center"
         android:textSize="20dp"
-    />
+        />
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="0.5"
-        android:layout_below="@id/imagem_jogo"
-        android:gravity="center" />
+        android:layout_below="@id/nome_jogo"
+        android:gravity="center"
+        android:numStars="10"
+        android:rating="0"
+        android:stepSize="0.5" />
+
+    <TextView
+        android:id="@+id/lblPlataforma"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingBar"
+        android:text="@string/plataforma_"
+        android:gravity="left"
+        android:textSize="20dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
+
+    <TextView
+        android:id="@+id/lblLancamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPlataforma"
+        android:text="@string/lancamento_"
+        android:gravity="left"
+        android:textSize="20dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
+
+    <TextView
+        android:id="@+id/lblGenero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblLancamento"
+        android:text="@string/genero_"
+        android:gravity="left"
+        android:textSize="20dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/container_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblGenero"
+        android:background="@android:color/white"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <EditText
+            android:id="@+id/edValor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/valor"/>
+
+    </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>
