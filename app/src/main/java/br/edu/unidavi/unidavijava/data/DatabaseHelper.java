@@ -293,4 +293,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return jogoList;
     }
+
+    public List<Float> getInfoRanking(){
+        List<Float> ranking = new ArrayList<Float>();
+
+        String selectQuery = "SELECT sum(tenho) as tenho, sum(joguei) as joguei, sum(zerei) as zerei, sum(quero) as quero, sum(paguei) as paguei FROM " + TABLE_GAME;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+
+                ranking.add(cursor.getFloat(0));
+                ranking.add(cursor.getFloat(1));
+                ranking.add(cursor.getFloat(2));
+                ranking.add(cursor.getFloat(3));
+                ranking.add(cursor.getFloat(4));
+
+            } while (cursor.moveToNext());
+        }
+        db.close();
+
+        return ranking;
+    }
 }
