@@ -67,7 +67,6 @@ public class ListaGeralActivity extends Fragment {
 
     private void salvar(List<Jogo> jogoList) {
 
-        //DatabaseHelper db = new DatabaseHelper(getActivity());
         for (Jogo jogo : jogoList) {
             db.createJogo(jogo);
         }
@@ -96,7 +95,6 @@ public class ListaGeralActivity extends Fragment {
         */
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
 
-        //DatabaseHelper db = new DatabaseHelper(getActivity());
         // Recupar os jogos do banco
         List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
 

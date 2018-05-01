@@ -15,4 +15,6 @@
     <string name="valor_">Valor:</string>
     <string name="lancamento_">Lançamento:</string>
     <string name="plataforma_">Plataforma:</string>
+    <string name="gravar">Gravar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
