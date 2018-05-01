@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
+import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
@@ -29,7 +32,7 @@ public class ListaMeusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_aba_lista_geral, container, false);
+        View view = inflater.inflate(R.layout.fragment_aba_lista_meus, container, false);
 
         WebTaskGames webTaskGames = new WebTaskGames(getActivity());
         webTaskGames.execute();
@@ -50,6 +53,15 @@ public class ListaMeusFragment extends Fragment {
         db = new DatabaseHelper(getActivity());
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+        List<MeuJogo> gamesList = db.getAllMeusJogos(Ordenacao.NOME);
+
+        carregarLista(gamesList);
     }
 
     public void carregarLista(List<MeuJogo> gamesList){

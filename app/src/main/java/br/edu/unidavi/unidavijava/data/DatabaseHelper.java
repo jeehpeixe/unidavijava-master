@@ -106,31 +106,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String ordenacao = " ORDER BY ";
         switch (order) {
             case NOME:
-                ordenacao = "nome";
+                ordenacao += "nome";
                 break;
             case NOME_DESC:
-                ordenacao = "nome DESC";
+                ordenacao += "nome DESC";
                 break;
             case DATA:
-                ordenacao = "lancamento";
+                ordenacao += "lancamento";
                 break;
             case DATA_DESC:
-                ordenacao = "lancamento DESC";
+                ordenacao += "lancamento DESC";
                 break;
             case GENERO:
-                ordenacao = "genero";
+                ordenacao += "genero";
                 break;
             case GENERO_DESC:
-                ordenacao = "genero DESC";
+                ordenacao += "genero DESC";
                 break;
             case NOTA:
-                ordenacao = "nota";
+                ordenacao += "nota";
                 break;
             case NOTA_DESC:
-                ordenacao = "nota DESC";
+                ordenacao += "nota DESC";
                 break;
             default:
-                ordenacao = "nome";
+                ordenacao += "nome";
                 break;
         }
         return ordenacao;
