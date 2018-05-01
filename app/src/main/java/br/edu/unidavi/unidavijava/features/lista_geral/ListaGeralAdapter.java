@@ -1,17 +1,22 @@
 package br.edu.unidavi.unidavijava.features.lista_geral;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.model.Jogo;
+import br.edu.unidavi.unidavijava.model.MeuJogo;
 
 public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder> {
 
@@ -37,15 +42,42 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
     @Override
     public void onBindViewHolder(ListaGeralViewHolder holder, int position) {
 
-        final Jogo myGame = gamesList.get(position);
+        final Jogo game = gamesList.get(position);
 
-        holder.labelTitle.setText(myGame.getNome());
-        holder.labelPlatform.setText(myGame.getPlataforma().replaceAll("/.+", "").toUpperCase());
+        holder.labelTitle.setText(game.getNome());
+        holder.labelPlatform.setText(game.getPlataforma().toUpperCase());
 
         Picasso.with(context)
-                .load(myGame.getImageUrl())
+                .load(game.getImageUrl())
                 .placeholder(R.drawable.ic_videogame_asset_black_24dp)
                 .into(holder.thumbnail);
+
+
+        holder.botaoAddToMeusJogos.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                DatabaseHelper db = new DatabaseHelper(context);
+
+                MeuJogo meuJogo = new MeuJogo();
+                meuJogo.setId(game.getId());
+                meuJogo.setNome(game.getNome());
+                meuJogo.setPlataforma(game.getPlataforma());
+                meuJogo.setLancamento(game.getLancamento());
+                meuJogo.setGenero(game.getGenero());
+                meuJogo.setImageUrl(game.getImageUrl());
+                meuJogo.setNota(game.getNota());
+                meuJogo.setTenho(true);
+                if (db.createMeuJogo(meuJogo) == 1){
+                    Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                } else {
+                    Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
+
 
         /*holder.itemView.setOnTouchListener(new View.OnTouchListener() {
             @Override

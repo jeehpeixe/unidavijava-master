@@ -28,14 +28,14 @@ import br.edu.unidavi.unidavijava.web.WebTaskGames;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListaGeralActivity extends Fragment {
+public class ListaGeralFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListaGeralAdapter adapter;
     private ProgressDialog mDialog;
     private DatabaseHelper db;
 
-    public ListaGeralActivity() {
+    public ListaGeralFragment() {
         // Required empty public constructor
     }
 

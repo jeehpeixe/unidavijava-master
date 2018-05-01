@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void createMeuJogo(MeuJogo jogo) {
+    public int createMeuJogo(MeuJogo jogo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -98,8 +98,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("paguei", jogo.getPaguei());
         values.put("notaPessoal", jogo.getNotaPessoal());
 
-        db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().replace("'", "''").trim() + "' AND plataforma = '"+jogo.getPlataforma().replace("'", "''").trim()+"'", null);
+        int ret = db.update(TABLE_GAME, values, "nome = '" + jogo.getNome().replace("'", "''").trim() + "' AND plataforma = '"+jogo.getPlataforma().replace("'", "''").trim()+"'", null);
         db.close();
+        return ret;
     }
 
     private String getOrdem(Ordenacao order) {
@@ -148,7 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Jogo jogo = new Jogo();
-                jogo.setCodigo(cursor.getInt(0));
+                jogo.setId(cursor.getInt(0));
                 jogo.setNome(cursor.getString(1));
                 jogo.setPlataforma(cursor.getString(2));
                 jogo.setLancamento(cursor.getInt(3));
@@ -175,7 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Jogo jogo = new Jogo();
-                jogo.setCodigo(cursor.getInt(0));
+                jogo.setId(cursor.getInt(0));
                 jogo.setNome(cursor.getString(1));
                 jogo.setPlataforma(cursor.getString(2));
                 jogo.setLancamento(cursor.getInt(3));
@@ -205,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 MeuJogo jogo = new MeuJogo();
-                jogo.setCodigo(cursor.getInt(0));
+                jogo.setId(cursor.getInt(0));
                 jogo.setNome(cursor.getString(1));
                 jogo.setPlataforma(cursor.getString(2));
                 jogo.setLancamento(cursor.getInt(3));
@@ -256,7 +257,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 MeuJogo jogo = new MeuJogo();
-                jogo.setCodigo(cursor.getInt(0));
+                jogo.setId(cursor.getInt(0));
                 jogo.setNome(cursor.getString(1));
                 jogo.setPlataforma(cursor.getString(2));
                 jogo.setLancamento(cursor.getInt(3));

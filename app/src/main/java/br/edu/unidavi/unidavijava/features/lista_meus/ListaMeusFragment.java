@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +34,8 @@ public class ListaMeusFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_aba_lista_geral, container, false);
 
-        WebTaskGames webTaskGames = new WebTaskGames(getActivity());
-        webTaskGames.execute();
-
         mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Aguarde...");
+        mDialog.setMessage("Aguarde, carregando sua lista...");
         mDialog.setCancelable(false);
         mDialog.show();
 
@@ -49,10 +49,27 @@ public class ListaMeusFragment extends Fragment {
 
         db = new DatabaseHelper(getActivity());
 
+        LoadMeusJogosAsync loader = new LoadMeusJogosAsync();
+        loader.doInBackground(db);
+
         return view;
     }
 
-    public void carregarLista(List<MeuJogo> gamesList){
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe
+    public void onEvent(List<MeuJogo> gamesList){
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
@@ -64,5 +81,6 @@ public class ListaMeusFragment extends Fragment {
         }
         mDialog.dismiss();
     }
+
 
 }

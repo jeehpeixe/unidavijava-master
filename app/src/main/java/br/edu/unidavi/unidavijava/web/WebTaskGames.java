@@ -42,6 +42,7 @@ public class WebTaskGames extends WebTaskBase {
                 JSONObject gameJSON = (JSONObject) jsonArray.get(i);
                 Log.v("Jogo " + i, gameJSON.toString());
                 game = new Jogo();
+                game.setId(gameJSON.getInt("id"));
                 game.setNome(gameJSON.getString("name"));
                 game.setImageUrl(gameJSON.getString("imageUrl"));
                 try {
