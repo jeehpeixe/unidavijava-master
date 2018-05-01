@@ -59,6 +59,7 @@ public class ListaGeralActivity extends Fragment {
 
         return view;
     }
+
     private void salvar(List<Jogo> jogoList) {
 
         DatabaseHelper db = new DatabaseHelper(getActivity());
