@@ -11,7 +11,7 @@ import br.edu.unidavi.unidavijava.model.ListaMeuJogo;
 public class LoadMeusJogosAsync extends AsyncTask<DatabaseHelper, Void, Void> {
 
     @Override
-    protected Void doInBackground(DatabaseHelper... databaseHelpers) {
+    public Void doInBackground(DatabaseHelper... databaseHelpers) {
         ListaMeuJogo lista = new ListaMeuJogo();
         lista.setJogos(databaseHelpers[0].getAllMeusJogos(Ordenacao.NOME));
         EventBus.getDefault().post(lista);

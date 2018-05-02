@@ -64,13 +64,10 @@ public class ListaMeusFragment extends Fragment {
     }
 
     @Subscribe
-    //public void onEvent(String s){
     public void onEvent(ListaMeuJogo gamesList){
         Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
-        //if (s.equals("RELOAD")){
             //List<MeuJogo> gamesList = db.getAllMeusJogos(Ordenacao.NOME);
             carregarLista(gamesList.getJogos());
-        //}
     }
 
     public void carregarLista(List<MeuJogo> gamesList){

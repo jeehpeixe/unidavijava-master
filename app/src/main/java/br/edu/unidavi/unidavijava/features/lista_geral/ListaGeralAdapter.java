@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
+import br.edu.unidavi.unidavijava.features.lista_meus.LoadMeusJogosAsync;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 
@@ -24,6 +25,7 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
 
     Context context;
     List<Jogo> gamesList;
+    private LoadMeusJogosAsync loader;
 
     public ListaGeralAdapter(Context context, List<Jogo> gamesList){
         this.context = context;
@@ -60,6 +62,7 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
             public boolean onTouch(View v, MotionEvent event) {
 
                 DatabaseHelper db = new DatabaseHelper(context);
+                loader = new LoadMeusJogosAsync();
 
                 MeuJogo meuJogo = new MeuJogo();
                 meuJogo.setId(game.getId());
@@ -76,6 +79,7 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 } else {
                     Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
                 }
+                loader.doInBackground(db);
 
                 return false;
             }
