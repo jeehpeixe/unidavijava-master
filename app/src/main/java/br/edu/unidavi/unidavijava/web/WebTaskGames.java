@@ -13,6 +13,7 @@ import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.model.Jogo;
+import br.edu.unidavi.unidavijava.model.ListaJogo;
 
 /**
  * Created by thhen on 24/04/2018.
@@ -32,6 +33,7 @@ public class WebTaskGames extends WebTaskBase {
     public void handleResponse(String response) {
 
         List<Jogo> gamesList = new ArrayList<Jogo>();
+        ListaJogo lista = new ListaJogo();
 
         try {
             JSONArray jsonArray = new JSONArray(response);
@@ -75,7 +77,8 @@ public class WebTaskGames extends WebTaskBase {
                 }
                 gamesList.add(game);
             }
-            EventBus.getDefault().post(gamesList);
+            lista.setJogos(gamesList);
+            EventBus.getDefault().post(lista);
         } catch (JSONException e) {
             if(!isSilent()){
                 EventBus.getDefault().post(new Error(getContext().getString(R.string.label_error_invalid_response)));

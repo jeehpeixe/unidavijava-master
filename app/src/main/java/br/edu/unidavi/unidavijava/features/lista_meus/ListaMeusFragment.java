@@ -18,6 +18,7 @@ import java.util.List;
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Ordenacao;
+import br.edu.unidavi.unidavijava.model.ListaMeuJogo;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 
 public class ListaMeusFragment extends Fragment {
@@ -25,6 +26,7 @@ public class ListaMeusFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListaMeusAdapter adapter;
     private DatabaseHelper db;
+    private LoadMeusJogosAsync loader;
 
     public ListaMeusFragment() {}
 
@@ -42,6 +44,7 @@ public class ListaMeusFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getActivity());
+        loader = new LoadMeusJogosAsync();
 
         return view;
     }
@@ -49,8 +52,9 @@ public class ListaMeusFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        carregarLista();
+        //carregarLista();
         EventBus.getDefault().register(this);
+        loader.doInBackground(db);
     }
 
     @Override
@@ -60,14 +64,17 @@ public class ListaMeusFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(String s){
-        if (s.equals("RELOAD")){
-            carregarLista();
-        }
+    //public void onEvent(String s){
+    public void onEvent(ListaMeuJogo gamesList){
+        Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
+        //if (s.equals("RELOAD")){
+            //List<MeuJogo> gamesList = db.getAllMeusJogos(Ordenacao.NOME);
+            carregarLista(gamesList.getJogos());
+        //}
     }
 
-    public void carregarLista(){
-        List<MeuJogo> gamesList = db.getAllMeusJogos(Ordenacao.NOME);
+    public void carregarLista(List<MeuJogo> gamesList){
+
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.lista_meus_recyclerview).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_meus_empty_list_label).setVisibility(View.INVISIBLE);

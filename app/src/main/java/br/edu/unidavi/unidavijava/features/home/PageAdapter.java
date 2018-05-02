@@ -31,10 +31,9 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return new ConfiguracaoActivity();
             case 3:
                 return new RankingActivity();
-
             default:
                 //para non dar errinho por enquantio
-                return new RankingActivity();
+                return null;
         }
     }
 

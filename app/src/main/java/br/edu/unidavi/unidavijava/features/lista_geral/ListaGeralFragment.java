@@ -24,6 +24,7 @@ import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.model.Jogo;
+import br.edu.unidavi.unidavijava.model.ListaJogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
 
@@ -98,13 +99,13 @@ public class ListaGeralFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(List<Jogo> gamesList){
-        Log.d("EVENTBUS", "Recebido coleção em Lista Geral!");
-        if(gamesList.size() > 0) {
-            if (gamesList.get(0).getClass().getName().equals("br.edu.unidavi.unidavijava.model.Jogo")) {
-                salvar(gamesList);
-                carregarLista(gamesList);
-            }
+    public void onEvent(ListaJogo gamesList){
+        Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
+        if(gamesList.getJogos().size() > 0) {
+            //if (gamesList.get(0).getClass().getName().equals("br.edu.unidavi.unidavijava.model.Jogo")) {
+                salvar(gamesList.getJogos());
+                carregarLista(gamesList.getJogos());
+            //}
         }
     }
 
