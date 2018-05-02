@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
+import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 
 public class ListaMeusFragment extends Fragment {
@@ -42,15 +43,13 @@ public class ListaMeusFragment extends Fragment {
 
         db = new DatabaseHelper(getActivity());
 
-        LoadMeusJogosAsync loader = new LoadMeusJogosAsync();
-        loader.doInBackground(db);
-
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        carregarLista();
         EventBus.getDefault().register(this);
     }
 
@@ -61,15 +60,14 @@ public class ListaMeusFragment extends Fragment {
     }
 
     @Subscribe
-    public void onEvent(List<MeuJogo> gamesList){
-        if (gamesList.size() > 0) {
-            if (gamesList.get(0).getClass().getName().equals("br.edu.unidavi.unidavijava.model.MeuJogo")) {
-                carregarLista(gamesList);
-            }
+    public void onEvent(String s){
+        if (s.equals("RELOAD")){
+            carregarLista();
         }
     }
 
-    public void carregarLista(List<MeuJogo> gamesList){
+    public void carregarLista(){
+        List<MeuJogo> gamesList = db.getAllMeusJogos(Ordenacao.NOME);
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.lista_meus_recyclerview).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_meus_empty_list_label).setVisibility(View.INVISIBLE);

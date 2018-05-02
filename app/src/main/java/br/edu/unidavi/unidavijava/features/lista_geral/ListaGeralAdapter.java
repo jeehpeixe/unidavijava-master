@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
@@ -70,6 +72,7 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 meuJogo.setTenho(true);
                 if (db.createMeuJogo(meuJogo) == 1){
                     Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                    EventBus.getDefault().post(new String("RELOAD"));
                 } else {
                     Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
                 }
