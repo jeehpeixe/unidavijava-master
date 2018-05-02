@@ -6,7 +6,7 @@ package br.edu.unidavi.unidavijava.model;
 
 public class Jogo {
 
-    private Integer codigo;
+    private Integer id;
     private String nome;
     private String plataforma;
     private Integer lancamento;
@@ -22,12 +22,12 @@ public class Jogo {
         this.imageUrl = imageUrl;
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {

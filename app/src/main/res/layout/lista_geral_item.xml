@@ -45,7 +45,7 @@
         />
 
     <ImageView
-        android:id="@+id/games_list_arrow_right"
+        android:id="@+id/games_list_button_add"
         android:src="@drawable/ic_add_black_24dp"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -53,7 +53,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-
+        android:background="?selectableItemBackgroundBorderless"
         />
 
     <View style="@style/Divider"

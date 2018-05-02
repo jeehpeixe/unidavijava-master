@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import br.edu.unidavi.unidavijava.features.configuracoes.ConfiguracaoActivity;
-import br.edu.unidavi.unidavijava.features.lista_geral.ListaGeralActivity;
+import br.edu.unidavi.unidavijava.features.lista_geral.ListaGeralFragment;
 import br.edu.unidavi.unidavijava.features.lista_meus.ListaMeusFragment;
 import br.edu.unidavi.unidavijava.features.ranking.RankingActivity;
 
@@ -24,7 +24,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
             // Carregar as classes dos fragmentos aqui
             case 0:
-                return new ListaGeralActivity();
+                return new ListaGeralFragment();
             case 1:
                 return new ListaMeusFragment();
             case 2:
