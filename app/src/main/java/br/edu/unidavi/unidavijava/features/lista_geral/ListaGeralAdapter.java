@@ -49,7 +49,10 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
         final Jogo game = gamesList.get(position);
 
         holder.labelTitle.setText(game.getNome());
-        holder.labelPlatform.setText(game.getPlataforma().toUpperCase());
+        if (game.getPlataforma() != null)
+            holder.labelPlatform.setText(game.getPlataforma().toUpperCase());
+        else
+            holder.labelPlatform.setText("");
 
         Picasso.with(context)
                 .load(game.getImageUrl())

@@ -37,6 +37,7 @@ public class ListaGeralFragment extends Fragment {
     private ListaGeralAdapter adapter;
     private ProgressDialog mDialog;
     private DatabaseHelper db;
+    private LoadJogosAsync loader;
 
     public ListaGeralFragment() {
         // Required empty public constructor
@@ -64,6 +65,7 @@ public class ListaGeralFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getActivity());
+        loader = new LoadJogosAsync();
 
         return view;
     }
@@ -93,19 +95,18 @@ public class ListaGeralFragment extends Fragment {
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
 
         // Recupar os jogos do banco
-        List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
+        //List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
+        loader.doInBackground(db);
 
-        carregarLista(gamesList);
+        //carregarLista(gamesList);
     }
 
     @Subscribe
     public void onEvent(ListaJogo gamesList){
         Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
         if(gamesList.getJogos().size() > 0) {
-            //if (gamesList.get(0).getClass().getName().equals("br.edu.unidavi.unidavijava.model.Jogo")) {
-                salvar(gamesList.getJogos());
-                carregarLista(gamesList.getJogos());
-            //}
+            salvar(gamesList.getJogos());
+            carregarLista(gamesList.getJogos());
         }
     }
 
