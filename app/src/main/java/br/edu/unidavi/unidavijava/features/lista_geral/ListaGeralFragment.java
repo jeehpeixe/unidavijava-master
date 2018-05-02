@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
@@ -87,12 +89,6 @@ public class ListaGeralFragment extends Fragment {
 
     @Subscribe
     public void onEvent(Error error){
-        /*
-        Toast.makeText(getActivity(), "Erro ao buscar lista de jogos...", Toast.LENGTH_SHORT).show();
-        getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);
-        getView().findViewById(R.id.recycler_list_games).setVisibility(View.INVISIBLE);
-        mDialog.dismiss();
-        */
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
 
         // Recupar os jogos do banco
@@ -103,10 +99,13 @@ public class ListaGeralFragment extends Fragment {
 
     @Subscribe
     public void onEvent(List<Jogo> gamesList){
-
-        // Salavar os jogos na base de dados
-        salvar(gamesList);
-        carregarLista(gamesList);
+        Log.d("EVENTBUS", "Recebido coleção em Lista Geral!");
+        if(gamesList.size() > 0) {
+            if (gamesList.get(0).getClass().getName().equals("br.edu.unidavi.unidavijava.model.Jogo")) {
+                salvar(gamesList);
+                carregarLista(gamesList);
+            }
+        }
     }
 
     public void carregarLista(List<Jogo> gamesList){

@@ -16,11 +16,11 @@ import br.edu.unidavi.unidavijava.model.MeuJogo;
 public class ListaMeusAdapter extends RecyclerView.Adapter<ListaMeusViewHolder> {
 
     Context context;
-    List<MeuJogo> gamesList;
+    List<MeuJogo> meusGames;
 
-    public ListaMeusAdapter(Context context, List<MeuJogo> gamesList){
+    public ListaMeusAdapter(Context context, List<MeuJogo> meusGames){
         this.context = context;
-        this.gamesList = gamesList;
+        this.meusGames = meusGames;
     }
 
     @Override
@@ -37,10 +37,10 @@ public class ListaMeusAdapter extends RecyclerView.Adapter<ListaMeusViewHolder> 
     @Override
     public void onBindViewHolder(ListaMeusViewHolder holder, int position) {
 
-        final MeuJogo myGame = gamesList.get(position);
+        final MeuJogo myGame = meusGames.get(position);
 
         holder.labelTitle.setText(myGame.getNome());
-        holder.labelPlatform.setText(myGame.getPlataforma().replaceAll("/.+", "").toUpperCase());
+        holder.labelPlatform.setText(myGame.getPlataforma().toUpperCase());
 
         Picasso.with(context)
                 .load(myGame.getImageUrl())
@@ -60,7 +60,7 @@ public class ListaMeusAdapter extends RecyclerView.Adapter<ListaMeusViewHolder> 
 
     @Override
     public int getItemCount() {
-        return gamesList.size();
+        return meusGames.size();
     }
 
 
