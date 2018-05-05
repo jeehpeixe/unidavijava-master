@@ -1,5 +1,7 @@
 package br.edu.unidavi.unidavijava.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jessicapeixe
  */

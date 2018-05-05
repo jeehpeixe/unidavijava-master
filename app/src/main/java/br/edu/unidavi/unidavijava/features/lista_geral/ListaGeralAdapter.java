@@ -1,12 +1,14 @@
 package br.edu.unidavi.unidavijava.features.lista_geral;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -17,19 +19,24 @@ import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
+import br.edu.unidavi.unidavijava.data.Ordenacao;
+import br.edu.unidavi.unidavijava.features.detalhe.DetalheActivity;
 import br.edu.unidavi.unidavijava.features.lista_meus.LoadMeusJogosAsync;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 
 public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder> {
 
-    Context context;
-    List<Jogo> gamesList;
+    private Context context;
+    public List<Jogo> gamesList;
     private LoadMeusJogosAsync loader;
+    private DatabaseHelper db;
+    private boolean artificioTecnico = false;
 
     public ListaGeralAdapter(Context context, List<Jogo> gamesList){
         this.context = context;
         this.gamesList = gamesList;
+        this.db = new DatabaseHelper(context);
     }
 
     @Override
@@ -49,53 +56,54 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
         final Jogo game = gamesList.get(position);
 
         holder.labelTitle.setText(game.getNome());
-        if (game.getPlataforma() != null)
-            holder.labelPlatform.setText(game.getPlataforma().toUpperCase());
-        else
-            holder.labelPlatform.setText("");
+        holder.labelPlatform.setText(game.getPlataforma() != null ? game.getPlataforma().toUpperCase() : "");
 
         Picasso.with(context)
                 .load(game.getImageUrl())
                 .placeholder(R.drawable.ic_videogame_asset_black_24dp)
                 .into(holder.thumbnail);
 
+        final ImageView botaoAdd = holder.botaoAddToMeusJogos;
+        Picasso.with(context).load(R.drawable.ic_add_black_24dp).placeholder(R.drawable.ic_add_black_24dp).error(R.drawable.ic_add_black_24dp).into(botaoAdd);
 
-        holder.botaoAddToMeusJogos.setOnTouchListener(new View.OnTouchListener() {
+        if (db.getMeuJogo(game.getId()).size() > 0) {
+            Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
+        }
+
+        holder.botaoAddToMeusJogos.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                DatabaseHelper db = new DatabaseHelper(context);
-                loader = new LoadMeusJogosAsync();
-
-                MeuJogo meuJogo = new MeuJogo();
-                meuJogo.setId(game.getId());
-                meuJogo.setNome(game.getNome());
-                meuJogo.setPlataforma(game.getPlataforma());
-                meuJogo.setLancamento(game.getLancamento());
-                meuJogo.setGenero(game.getGenero());
-                meuJogo.setImageUrl(game.getImageUrl());
-                meuJogo.setNota(game.getNota());
-                meuJogo.setTenho(true);
-                if (db.createMeuJogo(meuJogo) == 1){
-                    Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+            public void onClick(View v) {
+                if (db.getMeuJogo(game.getId()).size() == 0) {
+                    MeuJogo meuJogo = new MeuJogo();
+                    meuJogo.setId(game.getId());
+                    meuJogo.setTenho(true);
+                    if (db.createMeuJogo(meuJogo) > 0) {
+                        Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                        Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
+                    } else {
+                        Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                    }
                 } else {
-                    Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                    if (db.deleteMeuJogo(game.getId()) > 0) {
+                        Snackbar.make(v, String.format("O Jogo %s foi removido da sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                        Picasso.with(context).load(R.drawable.ic_add_black_24dp).placeholder(R.drawable.ic_add_black_24dp).error(R.drawable.ic_add_black_24dp).into(botaoAdd);
+                    }
                 }
+                loader = new LoadMeusJogosAsync();
                 loader.doInBackground(db);
-
-                return false;
             }
         });
 
 
-        /*holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Toast.makeText(context, view.toString(), Toast.LENGTH_SHORT).show();
-
-                return true;
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetalheActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.putExtra("gameid", game.getId());
+                v.getContext().startActivity(i);
             }
-        });*/
+        });
 
     }
 

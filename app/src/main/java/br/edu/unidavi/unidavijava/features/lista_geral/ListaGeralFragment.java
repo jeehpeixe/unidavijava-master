@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +24,11 @@ import java.util.logging.Logger;
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Ordenacao;
+import br.edu.unidavi.unidavijava.data.SessionConfig;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.ListaJogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ListaGeralFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -38,6 +36,8 @@ public class ListaGeralFragment extends Fragment {
     private ProgressDialog mDialog;
     private DatabaseHelper db;
     private LoadJogosAsync loader;
+    private List<Jogo> listaCompletaGames;
+    private SessionConfig session;
 
     public ListaGeralFragment() {
         // Required empty public constructor
@@ -57,25 +57,28 @@ public class ListaGeralFragment extends Fragment {
         mDialog.show();
 
         recyclerView = view.findViewById(R.id.recycler_list_games);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
         adapter = new ListaGeralAdapter(getActivity(), new ArrayList<Jogo>());
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getActivity());
+
+        session = new SessionConfig(getContext());
+
         loader = new LoadJogosAsync();
+        loader.setOrdem(getOrdenacao());
+        loader.setInicioFiltro(Integer.parseInt(session.getAnoInicioInSession()));
+        loader.setFimFiltro(Integer.parseInt(session.getAnoFinalInSession()));
 
         return view;
     }
 
     private void salvar(List<Jogo> jogoList) {
-
         for (Jogo jogo : jogoList) {
             db.createJogo(jogo);
         }
-
     }
 
     @Override
@@ -93,20 +96,33 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe
     public void onEvent(Error error){
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
-
-        // Recupar os jogos do banco
-        //List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
         loader.doInBackground(db);
+    }
 
-        //carregarLista(gamesList);
+    private Ordenacao getOrdenacao(){
+        if (session.getOrdemCategoriaInSession()) {
+            return Ordenacao.GENERO;
+        }
+        if (session.getOrdemDataInSession()) {
+            return Ordenacao.DATA;
+        }
+
+        return Ordenacao.NOME;
     }
 
     @Subscribe
     public void onEvent(ListaJogo gamesList){
-        Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
         if(gamesList.getJogos().size() > 0) {
             salvar(gamesList.getJogos());
             carregarLista(gamesList.getJogos());
+        }
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(String message){
+        if (message.equals("RECARREGAR")){
+            carregarLista(listaCompletaGames);
+            EventBus.getDefault().removeStickyEvent(message);
         }
     }
 
@@ -114,14 +130,18 @@ public class ListaGeralFragment extends Fragment {
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
+
+            adapter.gamesList = new ArrayList<>();
+            adapter.notifyDataSetChanged();
+
             adapter.gamesList = gamesList;
             adapter.notifyDataSetChanged();
+
+            listaCompletaGames = gamesList;
         } else {
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.INVISIBLE);
         }
         mDialog.dismiss();
     }
-
-
 }

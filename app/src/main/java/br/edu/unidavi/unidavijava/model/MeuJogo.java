@@ -12,7 +12,7 @@ public class MeuJogo extends Jogo {
     private boolean zerei;
     private boolean fisico;
     private Float paguei;
-    private Double notaPessoal;
+    private Float notaPessoal;
 
     public boolean isQuero() {
         return quero;
@@ -62,11 +62,11 @@ public class MeuJogo extends Jogo {
         this.paguei = paguei;
     }
 
-    public Double getNotaPessoal() {
+    public Float getNotaPessoal() {
         return notaPessoal;
     }
 
-    public void setNotaPessoal(Double nota) {
+    public void setNotaPessoal(Float nota) {
         this.notaPessoal = nota;
     }
 

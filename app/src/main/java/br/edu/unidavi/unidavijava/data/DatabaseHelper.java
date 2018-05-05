@@ -12,10 +12,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -262,11 +260,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return ordenacao;
     }
 
-    public List<Jogo> getAllJogos(Ordenacao order) {
+    private String getPeriodo(Integer anoInicio, Integer anoFinal){
+        if (anoInicio > 0 && anoFinal > 0) {
+            return "where lancamento between " + anoInicio + " and " + anoFinal;
+        }
+        if (anoInicio > 0) {
+            return "where lancamento >= " + anoInicio;
+        }
+        if (anoFinal > 0) {
+            return "where lancamento <= " + anoFinal;
+        }
+
+        return "";
+    }
+
+    public List<Jogo> getAllJogos(Ordenacao order, Integer anoInicio, Integer anoFinal) {
         List<Jogo> jogoList = new ArrayList<Jogo>();
 
         String ordenacao = getOrdem(order);
-        String selectQuery = "SELECT * FROM " + TABLE_GAME + ordenacao;
+        String periodo = getPeriodo(anoInicio, anoFinal);
+        String selectQuery = "SELECT * FROM " + TABLE_GAME + periodo + ordenacao;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -362,7 +375,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 else
                     jogo.setFisico(false);
                 jogo.setPaguei(cursor.getFloat(12));
-                jogo.setNotaPessoal(cursor.getDouble(13));
+                jogo.setNotaPessoal(cursor.getFloat(13));
 
                 jogoList.add(jogo);
             } while (cursor.moveToNext());
@@ -417,7 +430,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 else
                     jogo.setFisico(false);
                 jogo.setPaguei(cursor.getFloat(12));
-                jogo.setNotaPessoal(cursor.getDouble(13));
+                jogo.setNotaPessoal(cursor.getFloat(13));
 
                 jogoList.add(jogo);
             } while (cursor.moveToNext());
@@ -425,6 +438,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return jogoList;
+    }
+
+    public int deleteMeuJogo(int gameId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int affected = db.delete(TABLE_MYGAME, "codigo_game = " + gameId, null);
+        db.close();
+        return affected;
     }
 
     public List<Float> getInfoRanking(){
