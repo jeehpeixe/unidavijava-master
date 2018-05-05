@@ -1,6 +1,7 @@
 package br.edu.unidavi.unidavijava.features.lista_geral;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import java.util.List;
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Ordenacao;
+import br.edu.unidavi.unidavijava.features.detalhe.DetalheActivity;
 import br.edu.unidavi.unidavijava.features.lista_meus.LoadMeusJogosAsync;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
@@ -93,6 +95,17 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 return false;
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetalheActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.putExtra("gameid", game.getId());
+                v.getContext().startActivity(i);
+            }
+        });
+
     }
 
     @Override
