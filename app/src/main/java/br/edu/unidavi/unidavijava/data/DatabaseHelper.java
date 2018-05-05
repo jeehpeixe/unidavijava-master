@@ -112,6 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /*
     public void exportDB(){
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
@@ -173,6 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
+    */
 
     public void createJogo(Jogo jogo) {
         SQLiteDatabase db = this.getWritableDatabase();

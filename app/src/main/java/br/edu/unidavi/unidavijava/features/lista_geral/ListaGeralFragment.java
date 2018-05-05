@@ -69,8 +69,15 @@ public class ListaGeralFragment extends Fragment {
 
         loader = new LoadJogosAsync();
         loader.setOrdem(getOrdenacao());
-        loader.setInicioFiltro(Integer.parseInt(session.getAnoInicioInSession()));
-        loader.setFimFiltro(Integer.parseInt(session.getAnoFinalInSession()));
+        int filtro = 0;
+        try {
+            filtro = Integer.parseInt(session.getAnoInicioInSession());
+        } catch (Exception e) {}
+        loader.setInicioFiltro(filtro);
+        try {
+            filtro = Integer.parseInt(session.getAnoFinalInSession());
+        } catch (Exception e) {}
+        loader.setFimFiltro(filtro);
 
         return view;
     }
