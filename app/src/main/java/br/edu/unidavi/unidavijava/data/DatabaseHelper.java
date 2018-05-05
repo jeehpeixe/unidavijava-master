@@ -427,6 +427,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return jogoList;
     }
 
+    public int deleteMeuJogo(int gameId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int affected = db.delete(TABLE_MYGAME, "codigo_game = " + gameId, null);
+        db.close();
+        return affected;
+    }
+
     public List<Float> getInfoRanking(){
         List<Float> ranking = new ArrayList<Float>();
 
