@@ -27,7 +27,6 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
 
     private Context context;
     public List<Jogo> gamesList;
-    private List<MeuJogo> meusJogosList;
     private LoadMeusJogosAsync loader;
     private DatabaseHelper db;
 
@@ -35,7 +34,6 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
         this.context = context;
         this.gamesList = gamesList;
         this.db = new DatabaseHelper(context);
-        meusJogosList = db.getAllMeusJogos(Ordenacao.NOME);
     }
 
     @Override
@@ -64,11 +62,9 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
 
         final ImageView botaoAdd = holder.botaoAddToMeusJogos;
         Picasso.with(context).load(R.drawable.ic_add_black_24dp).placeholder(R.drawable.ic_add_black_24dp).error(R.drawable.ic_add_black_24dp).into(botaoAdd);
-        for(MeuJogo mj : meusJogosList) {
-            if (mj.getId() == game.getId()) {
-                Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
-                break;
-            }
+
+        if (db.getMeuJogo(game.getId()).size() > 0) {
+            Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
         }
 
         holder.botaoAddToMeusJogos.setOnTouchListener(new View.OnTouchListener() {
@@ -78,12 +74,6 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 if (db.getMeuJogo(game.getId()).size() == 0) {
                     MeuJogo meuJogo = new MeuJogo();
                     meuJogo.setId(game.getId());
-                    //meuJogo.setNome(game.getNome());
-                    //meuJogo.setPlataforma(game.getPlataforma());
-                    //meuJogo.setLancamento(game.getLancamento());
-                    //meuJogo.setGenero(game.getGenero());
-                    //meuJogo.setImageUrl(game.getImageUrl());
-                    //meuJogo.setNota(game.getNota());
                     meuJogo.setTenho(true);
                     if (db.createMeuJogo(meuJogo) > 0) {
                         Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
@@ -103,8 +93,6 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 return false;
             }
         });
-
-
     }
 
     @Override

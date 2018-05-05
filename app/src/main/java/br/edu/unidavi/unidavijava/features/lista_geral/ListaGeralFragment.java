@@ -99,12 +99,24 @@ public class ListaGeralFragment extends Fragment {
         }
     }
 
+    @Subscribe
+    public void onEvent(String message){
+        if (message.equals("RECARREGAR")){
+            carregarLista(listaCompletaGames);
+        }
+    }
+
     public void carregarLista(List<Jogo> gamesList){
         if(gamesList.size() != 0) {
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
+
+            adapter.gamesList = new ArrayList<>();
+            adapter.notifyDataSetChanged();
+
             adapter.gamesList = gamesList;
             adapter.notifyDataSetChanged();
+
             listaCompletaGames = gamesList;
         } else {
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);

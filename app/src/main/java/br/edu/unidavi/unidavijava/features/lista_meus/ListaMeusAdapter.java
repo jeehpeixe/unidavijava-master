@@ -68,6 +68,7 @@ public class ListaMeusAdapter extends RecyclerView.Adapter<ListaGeralViewHolder>
                     Snackbar.make(v, String.format("O Jogo %s foi removido da sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
                     loader = new LoadMeusJogosAsync();
                     loader.doInBackground(db);
+                    EventBus.getDefault().post(new String("RECARREGAR"));
                 } else {
                     Snackbar.make(v, String.format("O Jogo %s não pode ser eliminado se sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
                 }
