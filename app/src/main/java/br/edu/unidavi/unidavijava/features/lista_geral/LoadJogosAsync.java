@@ -10,11 +10,27 @@ import br.edu.unidavi.unidavijava.model.ListaJogo;
 
 public class LoadJogosAsync extends AsyncTask<DatabaseHelper, Void, Void> {
 
+    private Ordenacao ordem;
+    private Integer inicioFiltro;
+    private Integer fimFiltro;
+
     @Override
     public Void doInBackground(DatabaseHelper... databaseHelpers) {
         ListaJogo lista = new ListaJogo();
-        lista.setJogos(databaseHelpers[0].getAllJogos(Ordenacao.NOME));
+        lista.setJogos(databaseHelpers[0].getAllJogos(this.ordem, this.inicioFiltro, this.fimFiltro));
         EventBus.getDefault().post(lista);
         return null;
+    }
+
+    public void setOrdem(Ordenacao ordenacao){
+        this.ordem = ordenacao;
+    }
+
+    public void setInicioFiltro(Integer inicio){
+        this.inicioFiltro = inicio;
+    }
+
+    public void setFimFiltro(Integer fim){
+        this.fimFiltro = fim;
     }
 }

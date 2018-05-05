@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Ordenacao;
+import br.edu.unidavi.unidavijava.data.SessionConfig;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.ListaJogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
@@ -36,6 +37,7 @@ public class ListaGeralFragment extends Fragment {
     private DatabaseHelper db;
     private LoadJogosAsync loader;
     private List<Jogo> listaCompletaGames;
+    private SessionConfig session;
 
     public ListaGeralFragment() {
         // Required empty public constructor
@@ -55,15 +57,20 @@ public class ListaGeralFragment extends Fragment {
         mDialog.show();
 
         recyclerView = view.findViewById(R.id.recycler_list_games);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
         adapter = new ListaGeralAdapter(getActivity(), new ArrayList<Jogo>());
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getActivity());
+
+        session = new SessionConfig(getContext());
+
         loader = new LoadJogosAsync();
+        loader.setOrdem(getOrdenacao());
+        loader.setInicioFiltro(Integer.parseInt(session.getAnoInicioInSession()));
+        loader.setFimFiltro(Integer.parseInt(session.getAnoFinalInSession()));
 
         return view;
     }
@@ -90,6 +97,17 @@ public class ListaGeralFragment extends Fragment {
     public void onEvent(Error error){
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
         loader.doInBackground(db);
+    }
+
+    private Ordenacao getOrdenacao(){
+        if (session.getOrdemCategoriaInSession()) {
+            return Ordenacao.GENERO;
+        }
+        if (session.getOrdemDataInSession()) {
+            return Ordenacao.DATA;
+        }
+
+        return Ordenacao.NOME;
     }
 
     @Subscribe
@@ -126,6 +144,4 @@ public class ListaGeralFragment extends Fragment {
         }
         mDialog.dismiss();
     }
-
-
 }
