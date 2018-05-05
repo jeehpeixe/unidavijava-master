@@ -25,12 +25,11 @@ import br.edu.unidavi.unidavijava.model.MeuJogo;
 
 public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder> {
 
-    Context context;
-    List<Jogo> gamesList;
-    List<MeuJogo> meusJogosList;
+    private Context context;
+    public List<Jogo> gamesList;
+    private List<MeuJogo> meusJogosList;
     private LoadMeusJogosAsync loader;
-    DatabaseHelper db;
-
+    private DatabaseHelper db;
 
     public ListaGeralAdapter(Context context, List<Jogo> gamesList){
         this.context = context;

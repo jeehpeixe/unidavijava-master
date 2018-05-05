@@ -9,10 +9,10 @@ import br.edu.unidavi.unidavijava.R;
 
 public class ListaGeralViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView thumbnail;
-    TextView labelTitle;
-    TextView labelPlatform;
-    ImageView botaoAddToMeusJogos;
+    public ImageView thumbnail;
+    public TextView labelTitle;
+    public TextView labelPlatform;
+    public ImageView botaoAddToMeusJogos;
 
     public ListaGeralViewHolder(View itemView) {
         super(itemView);

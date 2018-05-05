@@ -27,10 +27,6 @@ import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.ListaJogo;
 import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ListaGeralFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -38,6 +34,7 @@ public class ListaGeralFragment extends Fragment {
     private ProgressDialog mDialog;
     private DatabaseHelper db;
     private LoadJogosAsync loader;
+    private List<Jogo> listaCompletaGames;
 
     public ListaGeralFragment() {
         // Required empty public constructor
@@ -71,11 +68,9 @@ public class ListaGeralFragment extends Fragment {
     }
 
     private void salvar(List<Jogo> jogoList) {
-
         for (Jogo jogo : jogoList) {
             db.createJogo(jogo);
         }
-
     }
 
     @Override
@@ -93,17 +88,11 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe
     public void onEvent(Error error){
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
-
-        // Recupar os jogos do banco
-        //List<Jogo> gamesList = db.getAllJogos(Ordenacao.NOME);
         loader.doInBackground(db);
-
-        //carregarLista(gamesList);
     }
 
     @Subscribe
     public void onEvent(ListaJogo gamesList){
-        Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
         if(gamesList.getJogos().size() > 0) {
             salvar(gamesList.getJogos());
             carregarLista(gamesList.getJogos());
@@ -116,6 +105,7 @@ public class ListaGeralFragment extends Fragment {
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.INVISIBLE);
             adapter.gamesList = gamesList;
             adapter.notifyDataSetChanged();
+            listaCompletaGames = gamesList;
         } else {
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.INVISIBLE);
