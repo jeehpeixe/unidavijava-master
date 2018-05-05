@@ -9,8 +9,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.model.Jogo;
@@ -52,6 +58,7 @@ public class DetalheActivity extends AppCompatActivity {
         CheckBox ckZerei = findViewById(R.id.ckZerei);
         CheckBox ckFisico = findViewById(R.id.ckFisico);
         final EditText pagueiEditText = findViewById(R.id.input_paguei);
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
 
         if(db.getMeuJogo(jogo.getId()).size() > 0){
             meuJogo = db.getMeuJogo(jogo.getId()).get(0);
@@ -60,6 +67,7 @@ public class DetalheActivity extends AppCompatActivity {
             ckJoguei.setChecked(meuJogo.isJoguei());
             ckZerei.setChecked(meuJogo.isZerei());
             ckFisico.setChecked(meuJogo.isFisico());
+            ratingBar.setRating(meuJogo.getNotaPessoal());
             if(meuJogo.getPaguei() > 0) {
                 pagueiEditText.setText(meuJogo.getPaguei().toString());
             }
@@ -69,11 +77,20 @@ public class DetalheActivity extends AppCompatActivity {
         }
 
         /* Events */
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                meuJogo.setNotaPessoal(rating);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
+            }
+        });
+
         rdTenho.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 meuJogo.setTenho(isChecked);
                 db.createMeuJogo(meuJogo);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
         rdQuero.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -81,6 +98,7 @@ public class DetalheActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 meuJogo.setQuero(isChecked);
                 db.createMeuJogo(meuJogo);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
         ckJoguei.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,6 +106,7 @@ public class DetalheActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 meuJogo.setJoguei(isChecked);
                 db.createMeuJogo(meuJogo);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
         ckZerei.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -95,6 +114,7 @@ public class DetalheActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 meuJogo.setZerei(isChecked);
                 db.createMeuJogo(meuJogo);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
         ckFisico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -102,23 +122,24 @@ public class DetalheActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 meuJogo.setFisico(isChecked);
                 db.createMeuJogo(meuJogo);
+                EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
 
         pagueiEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                try {
-                    meuJogo.setPaguei(Float.parseFloat(pagueiEditText.getText().toString()));
-                    db.createMeuJogo(meuJogo);
-                }catch(java.lang.NumberFormatException nfe){
-                    meuJogo.setPaguei(0f);
-                    db.createMeuJogo(meuJogo);
+                if (pagueiEditText.getText().toString().length() > 0) {
+                    try {
+                        meuJogo.setPaguei(Float.parseFloat(pagueiEditText.getText().toString()));
+                        db.createMeuJogo(meuJogo);
+                    } catch (java.lang.NumberFormatException nfe) {
+                    }
+                    EventBus.getDefault().postSticky(new String("RECARREGAR"));
                 }
                 return false;
             }
         });
-
 
     }
 

@@ -362,7 +362,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 else
                     jogo.setFisico(false);
                 jogo.setPaguei(cursor.getFloat(12));
-                jogo.setNotaPessoal(cursor.getDouble(13));
+                jogo.setNotaPessoal(cursor.getFloat(13));
 
                 jogoList.add(jogo);
             } while (cursor.moveToNext());
@@ -417,7 +417,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 else
                     jogo.setFisico(false);
                 jogo.setPaguei(cursor.getFloat(12));
-                jogo.setNotaPessoal(cursor.getDouble(13));
+                jogo.setNotaPessoal(cursor.getFloat(13));
 
                 jogoList.add(jogo);
             } while (cursor.moveToNext());

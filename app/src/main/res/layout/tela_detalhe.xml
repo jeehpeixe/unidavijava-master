@@ -29,11 +29,12 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/nome_jogo"
         android:gravity="center"
-        android:numStars="10"
+        android:layout_centerInParent="true"
+        android:numStars="5"
         android:rating="0"
         android:stepSize="0.5" />
 
@@ -44,8 +45,8 @@
         android:layout_below="@id/ratingBar"
         android:layout_marginTop="10dp"
         android:gravity="left"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="@string/plataforma_"
         android:textSize="16sp"
         />
@@ -56,8 +57,8 @@
         android:layout_below="@id/lblPlataforma"
         android:text="@string/lancamento_"
         android:gravity="left"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_marginTop="5dp"
         android:textSize="16sp"
         />
@@ -69,8 +70,8 @@
         android:layout_below="@id/lblLancamento"
         android:text="@string/genero_"
         android:gravity="left"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_marginTop="5dp"
         android:textSize="16sp"
         android:layout_marginBottom="15dp"
@@ -81,8 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/lblGenero"
-        android:paddingRight="10dp"
-        android:paddingLeft="4dp" >
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp" >
 
         <RadioButton
             android:id="@+id/rdQuero"

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +100,11 @@ public class ListaGeralFragment extends Fragment {
         }
     }
 
-    @Subscribe
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(String message){
         if (message.equals("RECARREGAR")){
             carregarLista(listaCompletaGames);
+            EventBus.getDefault().removeStickyEvent(message);
         }
     }
 

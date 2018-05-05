@@ -31,6 +31,7 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
     public List<Jogo> gamesList;
     private LoadMeusJogosAsync loader;
     private DatabaseHelper db;
+    private boolean artificioTecnico = false;
 
     public ListaGeralAdapter(Context context, List<Jogo> gamesList){
         this.context = context;
@@ -69,10 +70,9 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
             Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
         }
 
-        holder.botaoAddToMeusJogos.setOnTouchListener(new View.OnTouchListener() {
+        holder.botaoAddToMeusJogos.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
+            public void onClick(View v) {
                 if (db.getMeuJogo(game.getId()).size() == 0) {
                     MeuJogo meuJogo = new MeuJogo();
                     meuJogo.setId(game.getId());
@@ -91,10 +91,9 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
                 }
                 loader = new LoadMeusJogosAsync();
                 loader.doInBackground(db);
-
-                return false;
             }
         });
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
