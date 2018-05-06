@@ -1,5 +1,6 @@
 package br.edu.unidavi.unidavijava.features.home;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -18,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         WebTaskGames webTaskGames = new WebTaskGames(this);
         webTaskGames.execute();
-
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getResources().getString(R.string.app_name));

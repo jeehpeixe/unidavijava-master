@@ -1,5 +1,6 @@
 package br.edu.unidavi.unidavijava.web;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -39,6 +40,7 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
     private String image;
     private int responseCode;
     private boolean silent;
+    private ProgressDialog mDialog;
 
 
     public static final MediaType JSON
@@ -47,6 +49,15 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
     public WebTaskBase(Context context, String serviceURL) {
         this.serviceURL = serviceURL;
         this.context = context;
+    }
+
+
+    @Override
+    protected void onPreExecute() {
+        mDialog = new ProgressDialog(this.context);
+        mDialog.setMessage("Por favor aguarde...");
+        mDialog.setCancelable(false);
+        mDialog.show();
     }
 
     @Override
@@ -117,6 +128,7 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
                     break;
             }
         }
+        mDialog.dismiss();
     }
 
     public static boolean isOnline(Context context) {

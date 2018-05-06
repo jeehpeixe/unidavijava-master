@@ -28,7 +28,6 @@ public class ListaGeralFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ListaGeralAdapter adapter;
-    private ProgressDialog mDialog;
     private DatabaseHelper db;
     private LoadJogosAsync loader;
     private List<Jogo> listaCompletaGames;
@@ -42,11 +41,6 @@ public class ListaGeralFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_aba_lista_geral, container, false);
-
-        mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Aguarde...");
-        mDialog.setCancelable(false);
-        mDialog.show();
 
         recyclerView = view.findViewById(R.id.recycler_list_games);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -110,6 +104,5 @@ public class ListaGeralFragment extends Fragment {
             getView().findViewById(R.id.lista_geral_empty_list_label).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.recycler_list_games).setVisibility(View.INVISIBLE);
         }
-        mDialog.dismiss();
     }
 }

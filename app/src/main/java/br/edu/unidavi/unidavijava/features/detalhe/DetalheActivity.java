@@ -29,6 +29,7 @@ public class DetalheActivity extends AppCompatActivity {
     private Jogo jogo;
     private MeuJogo meuJogo = null;
     private DatabaseHelper db;
+    private int state = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setNotaPessoal(rating);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
 
@@ -97,6 +99,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setTenho(isChecked);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
         rdQuero.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -105,6 +108,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setQuero(isChecked);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
         ckJoguei.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -113,6 +117,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setJoguei(isChecked);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
         ckZerei.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,6 +126,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setZerei(isChecked);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
         ckFisico.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -129,6 +135,7 @@ public class DetalheActivity extends AppCompatActivity {
                 meuJogo.setFisico(isChecked);
                 db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
+                state = 1;
             }
         });
 
@@ -139,6 +146,7 @@ public class DetalheActivity extends AppCompatActivity {
                     try {
                         meuJogo.setPaguei(Float.parseFloat(pagueiEditText.getText().toString()));
                         db.createMeuJogo(meuJogo);
+                        state = 1;
                     } catch (java.lang.NumberFormatException nfe) {
                     }
                     EventBus.getDefault().postSticky(new String("RECARREGAR"));
@@ -151,5 +159,14 @@ public class DetalheActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(state == 1){
+            db.createMeuJogo(meuJogo);
+            EventBus.getDefault().postSticky(new String("RECARREGAR"));
+        }
+        super.onBackPressed();
     }
 }
