@@ -115,9 +115,9 @@ public class ListaGeralFragment extends Fragment {
 
     @Subscribe
     public void onEvent(ListaJogo gamesList){
-        if(gamesList.getJogos().size() > 0) {
+        //if(gamesList.getJogos().size() > 0) {
             carregarLista(gamesList.getJogos());
-        }
+        //}
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
