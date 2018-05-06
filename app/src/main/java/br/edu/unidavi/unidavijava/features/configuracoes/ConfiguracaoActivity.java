@@ -69,31 +69,33 @@ public class ConfiguracaoActivity extends Fragment {
         editAno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
 
-                if (!hasFocus && !editAno.getText().toString().isEmpty()){
+            if (!hasFocus){
 
-                    int iAno = Integer.parseInt(editAno.getText().toString());
+                boolean bPreenchido = !editAno.getText().toString().isEmpty();
 
-                    if (iAno < 1950 || iAno > 2050) {
-                        editAno.setText("");
+                int iAno = bPreenchido ? Integer.parseInt(editAno.getText().toString()) : 0;
 
-                        AlertDialog alerta = new AlertDialog.Builder(getActivity()).create();
+                if (bPreenchido && (iAno < 1950 || iAno > 2050)) {
+                    editAno.setText("");
 
-                        alerta.setCancelable(true);
-                        alerta.setCanceledOnTouchOutside(true);
-                        alerta.setTitle("Ano Inválido");
-                        alerta.setMessage("O ano deve estar entre 1900 e 2100");
-                        alerta.show();
-                        alerta.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                editAno.requestFocus();
-                            }
-                        });
-                    }
-                    else {
-                        gravaFiltroAnoSessao(editAno);
-                    }
+                    AlertDialog alerta = new AlertDialog.Builder(getActivity()).create();
+
+                    alerta.setCancelable(true);
+                    alerta.setCanceledOnTouchOutside(true);
+                    alerta.setTitle("Ano Inválido");
+                    alerta.setMessage("O ano deve estar entre 1900 e 2100");
+                    alerta.show();
+                    alerta.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            editAno.requestFocus();
+                        }
+                    });
                 }
+                else {
+                    gravaFiltroAnoSessao(editAno);
+                }
+            }
             }
         });
     }
