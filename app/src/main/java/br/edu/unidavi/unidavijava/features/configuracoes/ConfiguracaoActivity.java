@@ -12,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 
 import org.greenrobot.eventbus.EventBus;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.data.Session;
 import br.edu.unidavi.unidavijava.data.SessionConfig;
+import br.edu.unidavi.unidavijava.features.lista_meus.LoadMeusJogosAsync;
 import br.edu.unidavi.unidavijava.features.login.LoginActivity;
 
 public class ConfiguracaoActivity extends Fragment {
@@ -58,6 +61,7 @@ public class ConfiguracaoActivity extends Fragment {
         adicionaOnFocusChangeAno(editAnoFinal);
         adicionaOnChangeOrdenacao();
         adicionaOnClickSair();
+        adicionaOnClickResetarMeusJogos();
     }
 
     private void adicionaOnFocusChangeAno(EditText edit){
@@ -176,5 +180,41 @@ public class ConfiguracaoActivity extends Fragment {
         Session session = new Session(getContext());
         session.saveEmailInSession("");
         session.saveSenhaInSession("");
+    }
+
+    private void adicionaOnClickResetarMeusJogos(){
+        Button botaoResetar = getView().findViewById(R.id.button_reset);
+
+        botaoResetar.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    limpaMeusJogos();
+                }
+            }
+        );
+    }
+
+    private void limpaMeusJogos(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Atenção!");
+        builder.setMessage("Tem certeza que deseja resetar todos os seus jogos?");
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                DatabaseHelper db = new DatabaseHelper(getContext());
+                db.limparMeusJogos();
+
+                LoadMeusJogosAsync loader = new LoadMeusJogosAsync();
+                loader.doInBackground(db);
+            }
+        });
+
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {}
+        });
+        alerta = builder.create();
+        alerta.show();
     }
 }

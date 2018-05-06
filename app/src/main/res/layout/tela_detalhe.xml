@@ -21,7 +21,7 @@
         android:layout_height="45dp"
         android:layout_below="@id/imagem_jogo"
         android:gravity="center"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         android:background="@color/verde"
         />
@@ -47,7 +47,7 @@
         android:layout_below="@id/ratingBar"
         android:gravity="right"
         android:text="@string/plataforma_"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="10dp"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/lblPlataforma"
         android:layout_below="@id/ratingBar"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
@@ -73,7 +73,7 @@
         android:layout_below="@id/lblPlataforma"
         android:text="@string/lancamento_"
         android:gravity="right"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="3dp"
         android:textStyle="bold"
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/lblLancamento"
         android:layout_below="@id/lblPlataforma"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="5dp"/>
 
@@ -96,7 +96,7 @@
         android:layout_below="@id/lblLancamento"
         android:text="@string/genero_"
         android:gravity="right"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="3dp"
         android:paddingBottom="15dp"
@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/lblGenero"
         android:layout_below="@id/lblLancamento"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="5dp"/>
 
@@ -125,14 +125,14 @@
             android:id="@+id/rdQuero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:text="Quero" />
 
         <RadioButton
             android:id="@+id/rdTenho"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:text="Tenho" />
 
     </RadioGroup>
@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lblGenero"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:layout_marginLeft="60dp" />
@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ckJoguei"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:layout_marginLeft="60dp" />
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ckZerei"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:layout_marginLeft="60dp" />
@@ -201,7 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:textSize="14dp"
+            android:textSize="14sp"
             />
     </android.support.design.widget.TextInputLayout>
 </RelativeLayout>

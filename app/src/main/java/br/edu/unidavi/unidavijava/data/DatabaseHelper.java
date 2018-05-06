@@ -345,4 +345,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return ranking;
     }
+
+    public void limparMeusJogos(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MYGAME, "", null);
+        db.close();
+    }
 }
