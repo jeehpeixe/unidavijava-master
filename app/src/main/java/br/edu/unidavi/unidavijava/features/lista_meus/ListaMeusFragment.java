@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,14 @@ public class ListaMeusFragment extends Fragment {
     public void onEvent(ListaMeuJogo gamesList){
         Log.d("EVENTBUS" + this.getClass().getName(), "Recebido coleção em Lista Geral!");
         carregarLista(gamesList.getJogos());
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(String message){
+        if (message.equals("RECARREGARMEUS")) {
+            loader.doInBackground(db);
+            EventBus.getDefault().removeStickyEvent(message);
+        }
     }
 
     public void carregarLista(List<MeuJogo> gamesList){

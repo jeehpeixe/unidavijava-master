@@ -17,7 +17,8 @@ public class LoadJogosAsync extends AsyncTask<DatabaseHelper, Void, Void> {
     @Override
     public Void doInBackground(DatabaseHelper... databaseHelpers) {
         ListaJogo lista = new ListaJogo();
-        lista.setJogos(databaseHelpers[0].getAllJogos(this.ordem, this.inicioFiltro, this.fimFiltro));
+        //lista.setJogos(databaseHelpers[0].getAllJogos(this.ordem, this.inicioFiltro, this.fimFiltro));
+        lista.setJogos(databaseHelpers[0].getAllJogos());
         EventBus.getDefault().post(lista);
         return null;
     }

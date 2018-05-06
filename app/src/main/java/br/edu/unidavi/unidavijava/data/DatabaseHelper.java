@@ -29,11 +29,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_GAME = "GAME";
     private static final String TABLE_MYGAME = "MYGAME";
     private Context ctx;
+    private SessionConfig session;
 
     public DatabaseHelper (Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.ctx = context;
+        session = new SessionConfig(context);
         //Log.v("DatabaseHelper_CONSTRUT",Environment.getDataDirectory() + "/data/br.edu.unidavi.unidavijava/databases/" + DB_NAME);
     }
 
@@ -182,8 +184,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put("nome", jogo.getNome());
+        if (jogo.getPlataforma() == null)
+            jogo.setPlataforma("");
         values.put("plataforma", jogo.getPlataforma());
         values.put("lancamento", jogo.getLancamento());
+        if (jogo.getGenero() == null)
+            jogo.setGenero("");
         values.put("genero", jogo.getGenero());
         values.put("imageUrl", jogo.getImageUrl());
         values.put("nota", jogo.getNota());
@@ -277,12 +283,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return "";
     }
 
-    public List<Jogo> getAllJogos(Ordenacao order, Integer anoInicio, Integer anoFinal) {
+    //public List<Jogo> getAllJogos(Ordenacao order, Integer anoInicio, Integer anoFinal) {
+    public List<Jogo> getAllJogos() {
         List<Jogo> jogoList = new ArrayList<Jogo>();
+
+        Ordenacao order;
+        if (session.getOrdemCategoriaInSession()) {
+            order = Ordenacao.GENERO;
+        } else if (session.getOrdemDataInSession()) {
+                order = Ordenacao.DATA;
+        } else {
+            order = Ordenacao.NOME;
+        }
+        Integer anoInicio = 0;
+        Integer anoFinal = 0;
+        try {
+            anoInicio = Integer.parseInt(session.getAnoInicioInSession());
+        } catch (Exception e) {}
+        try {
+            anoFinal = Integer.parseInt(session.getAnoFinalInSession());
+        } catch (Exception e) {}
 
         String ordenacao = getOrdem(order);
         String periodo = getPeriodo(anoInicio, anoFinal);
-        String selectQuery = "SELECT * FROM " + TABLE_GAME + periodo + ordenacao;
+        String selectQuery = "SELECT * FROM " + TABLE_GAME + " " + periodo + ordenacao;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -333,8 +357,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return jogoList;
     }
 
-    public List<MeuJogo> getAllMeusJogos(Ordenacao order) {
+    //public List<MeuJogo> getAllMeusJogos(Ordenacao order) {
+    public List<MeuJogo> getAllMeusJogos() {
         List<MeuJogo> jogoList = new ArrayList<MeuJogo>();
+
+        Ordenacao order;
+        if (session.getOrdemCategoriaInSession()) {
+            order = Ordenacao.GENERO;
+        } else if (session.getOrdemDataInSession()) {
+            order = Ordenacao.DATA;
+        } else {
+            order = Ordenacao.NOME;
+        }
 
         String ordenacao = getOrdem(order);
         String selectQuery = "SELECT a.codigo_game, b.nome, b.plataforma, b.lancamento, b.genero, "

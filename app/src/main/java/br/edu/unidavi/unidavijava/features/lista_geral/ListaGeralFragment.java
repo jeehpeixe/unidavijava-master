@@ -67,6 +67,7 @@ public class ListaGeralFragment extends Fragment {
         session = new SessionConfig(getContext());
 
         loader = new LoadJogosAsync();
+        /*
         loader.setOrdem(getOrdenacao());
         int filtro = 0;
         try {
@@ -77,17 +78,10 @@ public class ListaGeralFragment extends Fragment {
             filtro = Integer.parseInt(session.getAnoFinalInSession());
         } catch (Exception e) {}
         loader.setFimFiltro(filtro);
+        */
 
         return view;
     }
-
-    /*
-    private void salvar(List<Jogo> jogoList) {
-        for (Jogo jogo : jogoList) {
-            db.createJogo(jogo);
-        }
-    }
-    */
 
     @Override
     public void onStart() {
@@ -122,7 +116,6 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe
     public void onEvent(ListaJogo gamesList){
         if(gamesList.getJogos().size() > 0) {
-            //salvar(gamesList.getJogos());
             carregarLista(gamesList.getJogos());
         }
     }
