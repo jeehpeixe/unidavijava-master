@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.Session;
 import br.edu.unidavi.unidavijava.data.SessionConfig;
@@ -102,6 +104,7 @@ public class ConfiguracaoActivity extends Fragment {
         else {
             session.saveAnoFinalInSession(editAno.getText().toString());
         }
+        EventBus.getDefault().post("RECARREGAR");
     }
 
     private void adicionaOnChangeOrdenacao(){
@@ -114,6 +117,10 @@ public class ConfiguracaoActivity extends Fragment {
             public void onClick(View view) {
                 SessionConfig session = new SessionConfig(getContext());
                 session.saveOrdemTituloInSession(ordemTitulo.isChecked());
+                session.saveOrdemDataInSession(ordemData.isChecked());
+                session.saveOrdemCategoriaInSession(ordemCategoria.isChecked());
+                EventBus.getDefault().post("RECARREGAR");
+                EventBus.getDefault().post("RECARREGARMEUS");
             }
         });
 
@@ -121,7 +128,11 @@ public class ConfiguracaoActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 SessionConfig session = new SessionConfig(getContext());
+                session.saveOrdemTituloInSession(ordemTitulo.isChecked());
                 session.saveOrdemDataInSession(ordemData.isChecked());
+                session.saveOrdemCategoriaInSession(ordemCategoria.isChecked());
+                EventBus.getDefault().post("RECARREGAR");
+                EventBus.getDefault().post("RECARREGARMEUS");
             }
         });
 
@@ -129,9 +140,14 @@ public class ConfiguracaoActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 SessionConfig session = new SessionConfig(getContext());
+                session.saveOrdemTituloInSession(ordemTitulo.isChecked());
+                session.saveOrdemDataInSession(ordemData.isChecked());
                 session.saveOrdemCategoriaInSession(ordemCategoria.isChecked());
+                EventBus.getDefault().post("RECARREGAR");
+                EventBus.getDefault().post("RECARREGARMEUS");
             }
         });
+
     }
 
     private void adicionaOnClickSair(){

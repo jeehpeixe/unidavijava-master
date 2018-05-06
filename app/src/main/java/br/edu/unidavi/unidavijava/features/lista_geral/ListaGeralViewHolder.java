@@ -16,9 +16,9 @@ public class ListaGeralViewHolder extends RecyclerView.ViewHolder {
 
     public ListaGeralViewHolder(View itemView) {
         super(itemView);
-        thumbnail = itemView.findViewById(R.id.games_list_thumbnail);
-        labelTitle = itemView.findViewById(R.id.games_list_game_title);
-        labelPlatform = itemView.findViewById(R.id.games_list_game_platform);
+        thumbnail           = itemView.findViewById(R.id.games_list_thumbnail);
+        labelTitle          = itemView.findViewById(R.id.games_list_game_title);
+        labelPlatform       = itemView.findViewById(R.id.games_list_game_platform);
         botaoAddToMeusJogos = itemView.findViewById(R.id.games_list_button_add);
     }
 

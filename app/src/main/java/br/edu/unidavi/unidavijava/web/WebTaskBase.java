@@ -79,7 +79,8 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
             response = client.newCall(request).execute();
             responseCode = response.code();
             responseString =  response.body().string();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             error = new Error(context.getString(R.string.error_connection));
         }
     }
@@ -87,9 +88,11 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+
         if(error!= null && !silent){
             EventBus.getDefault().post(error);
-        }else{
+        }
+        else{
             switch (getResponseCode()){
                 case RESPONSE_OK:
                     try {
@@ -98,9 +101,11 @@ public abstract class WebTaskBase extends AsyncTask<Void, Void, Void> {
                         if(!silent){
                             EventBus.getDefault().post(new Error(errorMessage));
                         }
-                    } catch (JSONException e) {
+                    }
+                    catch (JSONException e) {
                         handleResponse(responseString);
-                    } catch (NullPointerException e) {
+                    }
+                    catch (NullPointerException e) {
                         handleResponse("");
                     }
                     break;

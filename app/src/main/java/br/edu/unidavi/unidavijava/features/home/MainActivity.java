@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.web.WebTaskGames;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        WebTaskGames webTaskGames = new WebTaskGames(this);
+        webTaskGames.execute();
 
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -55,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         // Instanciando o ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.page_viewer);
 
-        // Descomentar essa área assim que criar os fragmentos e adicioná-los no PageAdapter
         PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

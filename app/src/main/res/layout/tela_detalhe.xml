@@ -11,10 +11,8 @@
     <ImageView
         android:id="@+id/imagem_jogo"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/bomberman"
-        android:contentDescription="@string/bomberman"
         />
 
     <TextView
@@ -22,60 +20,98 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@id/imagem_jogo"
-        android:text="@string/bomberman"
         android:gravity="center"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@color/verde"
         />
 
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/nome_jogo"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_centerInParent="true"
         android:numStars="5"
         android:rating="0"
-        android:stepSize="0.5" />
+        android:stepSize="0.5"
+        android:progressTint="@color/amarelo"
+        android:secondaryProgressTint="@color/amarelo"
+        />
 
     <TextView
         android:id="@+id/lblPlataforma"
-        android:layout_width="match_parent"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ratingBar"
-        android:layout_marginTop="10dp"
-        android:gravity="left"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:gravity="right"
         android:text="@string/plataforma_"
-        android:textSize="16sp"
-        />
-    <TextView
-        android:id="@+id/lblLancamento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lblPlataforma"
-        android:text="@string/lancamento_"
-        android:gravity="left"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
         />
 
     <TextView
+        android:id="@+id/txtPlataforma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/lblPlataforma"
+        android:layout_below="@id/ratingBar"
+        android:textSize="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        />
+
+    <TextView
+        android:id="@+id/lblLancamento"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPlataforma"
+        android:text="@string/lancamento_"
+        android:gravity="right"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="3dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/txtLancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/lblLancamento"
+        android:layout_below="@id/lblPlataforma"
+        android:textSize="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
         android:id="@+id/lblGenero"
-        android:layout_width="match_parent"
+        android:layout_width="95dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/lblLancamento"
         android:text="@string/genero_"
-        android:gravity="left"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:layout_marginTop="5dp"
-        android:textSize="16sp"
-        android:layout_marginBottom="15dp"
+        android:gravity="right"
+        android:textSize="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="3dp"
+        android:paddingBottom="15dp"
+        android:textStyle="bold"
         />
+
+    <TextView
+        android:id="@+id/txtGenero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/lblGenero"
+        android:layout_below="@id/lblLancamento"
+        android:textSize="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"/>
 
     <RadioGroup
         android:id="@+id/radioMeus"
@@ -83,20 +119,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lblGenero"
         android:paddingRight="16dp"
-        android:paddingLeft="16dp" >
+        android:paddingLeft="30dp" >
 
         <RadioButton
             android:id="@+id/rdQuero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:text="Quero" />
 
         <RadioButton
             android:id="@+id/rdTenho"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:text="Tenho" />
 
     </RadioGroup>
@@ -108,10 +144,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lblGenero"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="18dp"
+        android:textSize="14dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginLeft="60dp" />
 
     <CheckBox
         android:text="Zerei"
@@ -120,10 +156,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ckJoguei"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="18dp"
+        android:textSize="14dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginLeft="60dp" />
 
     <CheckBox
         android:text="Físico"
@@ -132,29 +168,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ckZerei"
         android:layout_toRightOf="@id/radioMeus"
-        android:textSize="18dp"
+        android:textSize="14dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:layout_marginLeft="50dp" />
+        android:layout_marginLeft="60dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="95dp"
         android:layout_height="50dp"
         android:text="Paguei:"
         android:id="@+id/label_paguei"
         android:layout_below="@id/ckFisico"
-        android:textSize="17dp"
-        android:gravity="center"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="4dp"
+        android:textSize="14dp"
+        android:gravity="right"
+        android:paddingTop="20dp"
         android:layout_marginLeft="10dp"
         />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/container_paguei"
         android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ckFisico"
         android:layout_toRightOf="@id/label_paguei"
         android:paddingLeft="6dp"
@@ -167,10 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:textSize="17dp"
+            android:textSize="14dp"
             />
     </android.support.design.widget.TextInputLayout>
-
-
-
 </RelativeLayout>

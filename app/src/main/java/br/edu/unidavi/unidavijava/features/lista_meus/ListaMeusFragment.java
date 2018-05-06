@@ -1,6 +1,5 @@
 package br.edu.unidavi.unidavijava.features.lista_meus;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
-import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.model.ListaMeuJogo;
 import br.edu.unidavi.unidavijava.model.MeuJogo;
 
@@ -36,15 +35,14 @@ public class ListaMeusFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_aba_lista_meus, container, false);
 
         recyclerView = view.findViewById(R.id.lista_meus_recyclerview);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
+        db      = new DatabaseHelper(getActivity());
+        loader  = new LoadMeusJogosAsync();
         adapter = new ListaMeusAdapter(getActivity(), new ArrayList<MeuJogo>());
-        recyclerView.setAdapter(adapter);
 
-        db = new DatabaseHelper(getActivity());
-        loader = new LoadMeusJogosAsync();
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -52,7 +50,6 @@ public class ListaMeusFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //carregarLista();
         EventBus.getDefault().register(this);
         loader.doInBackground(db);
     }
@@ -69,6 +66,14 @@ public class ListaMeusFragment extends Fragment {
         carregarLista(gamesList.getJogos());
     }
 
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(String message){
+        if (message.equals("RECARREGARMEUS")) {
+            loader.doInBackground(db);
+            EventBus.getDefault().removeStickyEvent(message);
+        }
+    }
+
     public void carregarLista(List<MeuJogo> gamesList){
 
         if(gamesList.size() != 0) {
@@ -76,11 +81,10 @@ public class ListaMeusFragment extends Fragment {
             getView().findViewById(R.id.lista_meus_empty_list_label).setVisibility(View.INVISIBLE);
             adapter.meusGames = gamesList;
             adapter.notifyDataSetChanged();
-        } else {
+        }
+        else {
             getView().findViewById(R.id.lista_meus_empty_list_label).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.lista_meus_recyclerview).setVisibility(View.INVISIBLE);
         }
     }
-
-
 }

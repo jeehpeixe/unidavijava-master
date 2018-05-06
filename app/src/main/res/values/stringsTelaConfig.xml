@@ -1,7 +1,7 @@
 <resources>
     <string name="label_titulo">Título</string>
     <string name="label_data">Data</string>
-    <string name="label_categoria">Categoria</string>
+    <string name="label_categoria">Gênero</string>
     <string name="button_resetar">Resetar meus Jogos</string>
     <string name="button_sair">Sair</string>
     <string name="filtro_ano">Filtro por Ano:</string>

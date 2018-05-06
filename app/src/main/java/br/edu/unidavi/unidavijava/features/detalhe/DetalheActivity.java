@@ -11,11 +11,13 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
@@ -42,23 +44,24 @@ public class DetalheActivity extends AppCompatActivity {
         ImageView imagemDoJogoImageView = findViewById(R.id.imagem_jogo);
         Picasso.with(getApplicationContext()).load(this.jogo.getImageUrl()).placeholder(R.drawable.bomberman).into(imagemDoJogoImageView);
 
-        TextView plataformaDoJogoTextView = findViewById(R.id.lblPlataforma);
-        plataformaDoJogoTextView.append(" " + jogo.getPlataforma());
+        TextView plataformaDoJogoTextView = findViewById(R.id.txtPlataforma);
+        plataformaDoJogoTextView.setText(jogo.getPlataforma());
 
-        TextView lancamentoDoJogoTextView = findViewById(R.id.lblLancamento);
-        lancamentoDoJogoTextView.append(" " + jogo.getLancamento());
+        TextView lancamentoDoJogoTextView = findViewById(R.id.txtLancamento);
+        lancamentoDoJogoTextView.setText(jogo.getLancamento().toString());
 
-        TextView generoDoJogoTextView = findViewById(R.id.lblGenero);
-        generoDoJogoTextView.append(" " + jogo.getPlataforma());
+        TextView generoDoJogoTextView = findViewById(R.id.txtGenero);
+        generoDoJogoTextView.setText(jogo.getGenero());
 
 
         RadioButton rdTenho = findViewById(R.id.rdTenho);
         RadioButton rdQuero = findViewById(R.id.rdQuero);
-        CheckBox ckJoguei = findViewById(R.id.ckJoguei);
-        CheckBox ckZerei = findViewById(R.id.ckZerei);
-        CheckBox ckFisico = findViewById(R.id.ckFisico);
-        final EditText pagueiEditText = findViewById(R.id.input_paguei);
+        CheckBox ckJoguei   = findViewById(R.id.ckJoguei);
+        CheckBox ckZerei    = findViewById(R.id.ckZerei);
+        CheckBox ckFisico   = findViewById(R.id.ckFisico);
         RatingBar ratingBar = findViewById(R.id.ratingBar);
+
+        final EditText pagueiEditText = findViewById(R.id.input_paguei);
 
         if(db.getMeuJogo(jogo.getId()).size() > 0){
             meuJogo = db.getMeuJogo(jogo.getId()).get(0);
@@ -68,10 +71,12 @@ public class DetalheActivity extends AppCompatActivity {
             ckZerei.setChecked(meuJogo.isZerei());
             ckFisico.setChecked(meuJogo.isFisico());
             ratingBar.setRating(meuJogo.getNotaPessoal());
+
             if(meuJogo.getPaguei() > 0) {
-                pagueiEditText.setText(meuJogo.getPaguei().toString());
+                pagueiEditText.setText(String.format("%.2f", meuJogo.getPaguei()));
             }
-        } else {
+        }
+        else {
             meuJogo = new MeuJogo();
             meuJogo.setId(jogo.getId());
         }
@@ -140,7 +145,6 @@ public class DetalheActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     @Override
