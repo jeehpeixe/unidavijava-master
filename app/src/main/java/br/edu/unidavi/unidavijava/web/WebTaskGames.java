@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
+import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.ListaJogo;
 
@@ -23,10 +24,12 @@ public class WebTaskGames extends WebTaskBase {
 
     private static String SERVICE_URL = "games";
     private Context context;
+    private DatabaseHelper db;
 
     public WebTaskGames(Context context){
         super(context, SERVICE_URL);
         this.context = context;
+        db = new DatabaseHelper(context);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class WebTaskGames extends WebTaskBase {
                 try {
                     game.setPlataforma(gameJSON.getString("platform"));
                 } catch (JSONException ex) {
-                    Log.v("Erro Genero", ex.getMessage());
+                    Log.v("Erro Plataforma", ex.getMessage());
                 }
                 genero = "";
                 try {
@@ -68,20 +71,23 @@ public class WebTaskGames extends WebTaskBase {
                 try {
                     game.setNota(gameJSON.getDouble("score"));
                 } catch (JSONException ex) {
-                    Log.v("Erro Genero", ex.getMessage());
+                    Log.v("Erro Score", ex.getMessage());
                 }
                 try {
                     game.setLancamento(gameJSON.getInt("year"));
                 } catch (JSONException ex) {
-                    Log.v("Erro Genero", ex.getMessage());
+                    Log.v("Erro Ano", ex.getMessage());
                 }
                 gamesList.add(game);
+                db.createJogo(game);
             }
-            lista.setJogos(gamesList);
-            EventBus.getDefault().post(lista);
+            //lista.setJogos(gamesList);
+            //EventBus.getDefault().post(lista);
+            EventBus.getDefault().post("RECARREGAR");
         } catch (JSONException e) {
             if(!isSilent()){
-                EventBus.getDefault().post(new Error(getContext().getString(R.string.label_error_invalid_response)));
+                //EventBus.getDefault().post(new Error(getContext().getString(R.string.label_error_invalid_response)));
+                Log.v("Erro JSON", e.getMessage());
             }
         }
     }

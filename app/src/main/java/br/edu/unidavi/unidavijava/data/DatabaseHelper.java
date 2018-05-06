@@ -61,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(CREATE_TABLE);
         } catch (Exception e) { }
+        onUpgrade(sqLiteDatabase, 1, DB_VERSION);
     }
 
     @Override

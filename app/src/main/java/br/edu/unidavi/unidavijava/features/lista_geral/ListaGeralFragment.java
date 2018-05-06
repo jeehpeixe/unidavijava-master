@@ -19,7 +19,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
@@ -48,8 +47,8 @@ public class ListaGeralFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_aba_lista_geral, container, false);
 
-        WebTaskGames webTaskGames = new WebTaskGames(getActivity());
-        webTaskGames.execute();
+        //WebTaskGames webTaskGames = new WebTaskGames(getActivity());
+        //webTaskGames.execute();
 
         mDialog = new ProgressDialog(getActivity());
         mDialog.setMessage("Aguarde...");
@@ -82,16 +81,19 @@ public class ListaGeralFragment extends Fragment {
         return view;
     }
 
+    /*
     private void salvar(List<Jogo> jogoList) {
         for (Jogo jogo : jogoList) {
             db.createJogo(jogo);
         }
     }
+    */
 
     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        loader.doInBackground(db);
     }
 
     @Override
@@ -103,7 +105,7 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe
     public void onEvent(Error error){
         Snackbar.make(getView(), error.getMessage(), Snackbar.LENGTH_LONG).show();
-        loader.doInBackground(db);
+        //loader.doInBackground(db);
     }
 
     private Ordenacao getOrdenacao(){
@@ -120,7 +122,7 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe
     public void onEvent(ListaJogo gamesList){
         if(gamesList.getJogos().size() > 0) {
-            salvar(gamesList.getJogos());
+            //salvar(gamesList.getJogos());
             carregarLista(gamesList.getJogos());
         }
     }
@@ -128,7 +130,8 @@ public class ListaGeralFragment extends Fragment {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onEvent(String message){
         if (message.equals("RECARREGAR")){
-            carregarLista(listaCompletaGames);
+            loader.doInBackground(db);
+            //carregarLista(listaCompletaGames);
             EventBus.getDefault().removeStickyEvent(message);
         }
     }
