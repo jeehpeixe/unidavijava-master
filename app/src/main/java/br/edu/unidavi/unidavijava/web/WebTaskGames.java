@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
 import br.edu.unidavi.unidavijava.model.Jogo;
 import br.edu.unidavi.unidavijava.model.ListaJogo;
@@ -44,18 +43,23 @@ public class WebTaskGames extends WebTaskBase {
             String genero = "";
             Jogo game;
             for(int i = 0; i < jsonArray.length(); i++){
+
                 JSONObject gameJSON = (JSONObject) jsonArray.get(i);
                 Log.v("Jogo " + i, gameJSON.toString());
                 game = new Jogo();
                 game.setId(gameJSON.getInt("id"));
                 game.setNome(gameJSON.getString("name"));
                 game.setImageUrl(gameJSON.getString("imageUrl"));
+
                 try {
                     game.setPlataforma(gameJSON.getString("platform"));
-                } catch (JSONException ex) {
+                }
+                catch (JSONException ex) {
                     Log.v("Erro Plataforma", ex.getMessage());
                 }
+
                 genero = "";
+
                 try {
                     generos = new JSONArray(gameJSON.getString("genres"));
                     for(int j = 0; j < generos.length(); j++){
@@ -65,28 +69,32 @@ public class WebTaskGames extends WebTaskBase {
                             genero = ", " + (String) generos.get(j);
                     }
                     game.setGenero(genero);
-                } catch (JSONException ex) {
+                }
+                catch (JSONException ex) {
                     Log.v("Erro Genero", ex.getMessage());
                 }
+
                 try {
                     game.setNota(gameJSON.getDouble("score"));
-                } catch (JSONException ex) {
+                }
+                catch (JSONException ex) {
                     Log.v("Erro Score", ex.getMessage());
                 }
+
                 try {
                     game.setLancamento(gameJSON.getInt("year"));
-                } catch (JSONException ex) {
+                }
+                catch (JSONException ex) {
                     Log.v("Erro Ano", ex.getMessage());
                 }
+
                 gamesList.add(game);
                 db.createJogo(game);
             }
-            //lista.setJogos(gamesList);
-            //EventBus.getDefault().post(lista);
             EventBus.getDefault().post("RECARREGAR");
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             if(!isSilent()){
-                //EventBus.getDefault().post(new Error(getContext().getString(R.string.label_error_invalid_response)));
                 Log.v("Erro JSON", e.getMessage());
             }
         }

@@ -5,21 +5,16 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import br.edu.unidavi.unidavijava.R;
 import br.edu.unidavi.unidavijava.data.DatabaseHelper;
-import br.edu.unidavi.unidavijava.data.Ordenacao;
 import br.edu.unidavi.unidavijava.features.detalhe.DetalheActivity;
 import br.edu.unidavi.unidavijava.features.lista_meus.LoadMeusJogosAsync;
 import br.edu.unidavi.unidavijava.model.Jogo;
@@ -31,12 +26,11 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
     public List<Jogo> gamesList;
     private LoadMeusJogosAsync loader;
     private DatabaseHelper db;
-    private boolean artificioTecnico = false;
 
     public ListaGeralAdapter(Context context, List<Jogo> gamesList){
-        this.context = context;
+        this.context   = context;
         this.gamesList = gamesList;
-        this.db = new DatabaseHelper(context);
+        this.db        = new DatabaseHelper(context);
     }
 
     @Override
@@ -73,24 +67,26 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
         holder.botaoAddToMeusJogos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (db.getMeuJogo(game.getId()).size() == 0) {
-                    MeuJogo meuJogo = new MeuJogo();
-                    meuJogo.setId(game.getId());
-                    meuJogo.setTenho(true);
-                    if (db.createMeuJogo(meuJogo) > 0) {
-                        Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
-                        Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
-                    } else {
-                        Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
-                    }
-                } else {
-                    if (db.deleteMeuJogo(game.getId()) > 0) {
-                        Snackbar.make(v, String.format("O Jogo %s foi removido da sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
-                        Picasso.with(context).load(R.drawable.ic_add_black_24dp).placeholder(R.drawable.ic_add_black_24dp).error(R.drawable.ic_add_black_24dp).into(botaoAdd);
-                    }
+            if (db.getMeuJogo(game.getId()).size() == 0) {
+                MeuJogo meuJogo = new MeuJogo();
+                meuJogo.setId(game.getId());
+                meuJogo.setTenho(true);
+                if (db.createMeuJogo(meuJogo) > 0) {
+                    Snackbar.make(v, String.format("O Jogo %s foi adicionado a sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                    Picasso.with(context).load(R.drawable.ic_clear_black_24dp).placeholder(R.drawable.ic_clear_black_24dp).error(R.drawable.ic_clear_black_24dp).into(botaoAdd);
                 }
-                loader = new LoadMeusJogosAsync();
-                loader.doInBackground(db);
+                else {
+                    Snackbar.make(v, String.format("Erro ao adicionar o jogo na sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                }
+            }
+            else {
+                if (db.deleteMeuJogo(game.getId()) > 0) {
+                    Snackbar.make(v, String.format("O Jogo %s foi removido da sua lista!", game.getNome()), Snackbar.LENGTH_LONG).show();
+                    Picasso.with(context).load(R.drawable.ic_add_black_24dp).placeholder(R.drawable.ic_add_black_24dp).error(R.drawable.ic_add_black_24dp).into(botaoAdd);
+                }
+            }
+            loader = new LoadMeusJogosAsync();
+            loader.doInBackground(db);
             }
         });
 
@@ -98,19 +94,16 @@ public class ListaGeralAdapter extends RecyclerView.Adapter<ListaGeralViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, DetalheActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.putExtra("gameid", game.getId());
-                v.getContext().startActivity(i);
+            Intent i = new Intent(context, DetalheActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            i.putExtra("gameid", game.getId());
+            v.getContext().startActivity(i);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
         return gamesList.size();
     }
-
-
 }

@@ -21,8 +21,6 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-
-            // Carregar as classes dos fragmentos aqui
             case 0:
                 return new ListaGeralFragment();
             case 1:
@@ -32,7 +30,6 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 3:
                 return new RankingActivity();
             default:
-                //para non dar errinho por enquantio
                 return null;
         }
     }

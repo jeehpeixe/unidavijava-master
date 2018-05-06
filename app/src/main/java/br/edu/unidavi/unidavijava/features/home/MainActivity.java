@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         // Instanciando o ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.page_viewer);
 
-        // Descomentar essa área assim que criar os fragmentos e adicioná-los no PageAdapter
         PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pageAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
