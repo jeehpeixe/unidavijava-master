@@ -86,6 +86,7 @@ public class DetalheActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 meuJogo.setNotaPessoal(rating);
+                db.createMeuJogo(meuJogo);
                 EventBus.getDefault().postSticky(new String("RECARREGAR"));
             }
         });
